@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns       = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "com.erichigdon.Digital Bulletin"
+        versionCode = "10"
+        version     = "1.0">
+ 
+    <name>Digital Bulletin</name>
+ 
+    <description>
+        Digital Bulletin
+    </description>
+ 
+    <author href="http://erichigdon.com" email="mrbassman.10@gmail.com">
+        Eric Higdon
+    </author>
+	<gap:plugin name="cordova-plugin-whitelist" version="1.0.0" source="npm" />
+ 	<allow-navigation href="http://erichigdon.com/*"/>
+	<access origin="*" />
+    <feature name="http://api.phonegap.com/1.0/camera"/>
+    <feature name="http://api.phonegap.com/1.0/contacts"/>
+    <feature name="http://api.phonegap.com/1.0/file"/>
+    <feature name="http://api.phonegap.com/1.0/geolocation"/>
+    <feature name="http://api.phonegap.com/1.0/media"/>
+    <feature name="http://api.phonegap.com/1.0/network"/>
+    <feature name="http://api.phonegap.com/1.0/notification"/>
+ 
+</widget>
