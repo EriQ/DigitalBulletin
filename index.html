@@ -16,7 +16,19 @@
 <link rel="stylesheet" href="jqm/jquery.mobile.icons-1.4.5.min.css" />
 <link rel="stylesheet" href="jqm/jquery.mobile.structure-1.4.5.min.css" />
 <link rel="stylesheet" href="jqm/jquery.mobile.theme-1.4.5.min.css" />
-
+<style type="text/css">
+img {
+	max-width: 100%;
+}
+span.contact {
+    display: block;
+    font-size: 85%;
+	font-weight: bold;
+}
+span.date {
+    float: right;
+}
+</style>
 <script src="js/jquery-2.1.4.min.js"></script> 
 <script>
 $(document).bind('mobileinit',function(){
@@ -26,33 +38,43 @@ $(document).bind('mobileinit',function(){
 });
 </script>
 <script src="jqm/jquery.mobile-1.4.5.min.js"></script>
+<script>
+$( document ).one( "pagecreate", ".homePage", function() {
+    
+    $( document ).on( "swipeleft", ".ui-page", function( event ) {
+        var next = $( this ).next().attr("id");
+        $.mobile.changePage( "#"+next, { transition: "slide", changeHash: true });
+    });
+    
+    $( document ).on( "swiperight", ".ui-page", function( event ) {
+        var next = $( this ).prev().attr("id");
+        $.mobile.changePage( "#"+next, { transition: "slide", reverse: true, changeHash: true });
+    });
+    
+});
+</script>
 </head>
 <body>
 
-<div data-role="page" id='home' data-theme='a'>
-  <div data-role="header" data-position="fixed" data-id="header" data-theme="a">
-    <h1>Welcome</h1>
-	<a href='#leftpanel1' data-icon='gear' data-iconpos='notext' data-theme='g'></a>
+<div data-role="page" id='home' class="homePage" data-theme='a'>
+    <div data-role="header" data-position="fixed" data-id="header" data-theme="a">
+        <h1>Welcome</h1>
+        <a href='#leftpanel1' data-icon='gear' data-iconpos='notext' data-theme='g'></a>
      
-  </div>
-  <div data-role="main" class="ui-content">
-  	<div class="headContent">
     </div>
-    <div class="welcomeContent">
-        <span class="welcomeNote">
-        <h2>Welcome to Olive!</h2>
-        <p>Hurrican Ivan changed Pensacola, changed Olive, and changed me. It was after that storm that our ministry in the community rose to a new level. The Ministry Village at Olive was born. Our engagement with Northwest Florida in compassion ministry has always been a part of our church. But that heartbeat simply became stronger after the storm.</p>
-        </span>
+    <div data-role="main" class="ui-content">
+        <div class="headContent">
+            <img src="images/OCC.JPG" alt="Operation Christmas Child"/>
+        </div>
+        <div class="welcomeContent">
+            <span class="welcomeNote">
+            <h2>Welcome to Olive!</h2>
+            <p>Hurrican Ivan changed Pensacola, changed Olive, and changed me. It was after that storm that our ministry in the community rose to a new level. The Ministry Village at Olive was born. Our engagement with Northwest Florida in compassion ministry has always been a part of our church. But that heartbeat simply became stronger after the storm.</p>
+            </span>
+        </div>
+        <div class="footContent">
+        </div>
     </div>
-    <div class="footContent">
-    </div>
-  </div>
-    
-	<div data-role="panel" id="leftpanel1" data-position="left" data-display="overlay" data-theme="a" data-position-fixed="true">
-        <div class="ui-panel-inner"><h3>Current Playlist:</h3>
-		<ul data-role='listview' data-inset='true' class='playlistpanelul'data-theme='e'></ul>
-		<a href="#demo-links" data-role='button' data-rel="close">Close panel</a></div>
-	</div>
     <div data-role="footer" data-position="fixed" data-id="navigation" data-theme="a">
         <div data-role="navbar">
             <ul>
@@ -69,6 +91,24 @@ $(document).bind('mobileinit',function(){
         <h1>Announcements</h1>
         <a href='#leftpanel1' data-icon='gear' data-iconpos='notext' data-theme='g'></a> 
   	</div>
+    <div data-role="main" class="ui-content">
+    	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+    		<h4>Identify & Use Your Spiritual Gifts <span class="date">10/14</span></h4>
+			<span class="contact">Contact: Huey Pearson 
+            	(<a href="mailto:hpearson@olivebaptist.org">hpearson@olivebaptist.org</a>)
+            </span>
+    		<p>In Christianity, spiritual gifts are endowments which may be given by the Holy Spirit. Join us to find yours! Class begins Wednesday, October 14 at 6pm in Room 5107.</p>
+		</div>
+    
+    	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+    		<h4>Discovering Olive <span class="date">10/25</span></h4>
+			<span class="contact">Contact: Beth Harris 
+            	(<a href="mailto:bharris@olivebaptist.org">bharris@olivebaptist.org</a>)
+            </span>
+    		<p>Have you Recently Joined Olive? A prospective member? Then join us Sunday, October 25 at 5:30pm in the Passmore Hall. You'll enjoy a delicious meal and hear Pastor's vision for our church. Reserve your spot by contacting Beth Harris.</p>
+		</div>
+        
+    </div>
     <div data-role="footer" data-position="fixed" data-id="navigation" data-theme="a">
         <div data-role="navbar">
             <ul>
