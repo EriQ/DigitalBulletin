@@ -52,16 +52,44 @@ $( document ).one( "pagecreate", ".homePage", function() {
     });
     
 });
+$(function() {
+    $( "[data-role='navbar']" ).navbar();
+    $( "[data-role='header'], [data-role='footer']" ).toolbar();
+});
+// Update the contents of the toolbars
+$( document ).on( "pagecontainerchange", function() {
+    // Each of the four pages in this demo has a data-title attribute
+    // which value is equal to the text of the nav button
+    // For example, on first page: <div data-role="page" data-title="Info">
+    var current = $( ".ui-page-active" ).jqmData( "title" );
+    // Change the heading
+    $( "[data-role='header'] h1" ).text( current );
+    // Remove active class from nav buttons
+    $( "[data-role='navbar'] a.ui-btn-active" ).removeClass( "ui-btn-active" );
+    // Add active class to current nav button
+    $( "[data-role='navbar'] a" ).each(function() {
+        if ( $( this ).text() === current ) {
+            $( this ).addClass( "ui-btn-active" );
+        }
+    });
+});
 </script>
 </head>
 <body>
-
-<div data-role="page" id='home' class="homePage" data-theme='a'>
-    <div data-role="header" data-position="fixed" data-id="header" data-theme="a">
-        <h1>Welcome</h1>
-        <a href='#leftpanel1' data-icon='gear' data-iconpos='notext' data-theme='g'></a>
-     
+<div data-role="header" data-position="fixed" data-id="header" data-theme="a">
+    <h1>Welcome</h1>
+</div>
+<div data-role="footer" data-id="footer" data-position="fixed" data-theme="a">
+    <div data-role="navbar" data-theme="a">
+        <ul>
+            <li><a href="#welcome" data-id="welcome" data-icon="home" data-transition="slide">Welcome</a></li>
+            <li><a href="#announcements" data-id="announcements" data-icon="comment" data-transition="slide">Announcements</a></li>
+            <li><a href="#service" data-id="service" class="ui-btn-active ui-state-persist" data-icon="bullets" data-transition="slide">Service</a></li>
+        </ul>
     </div>
+</div>
+<div data-role="page" id='welcome' class="homePage" data-theme='a' data-title="Welcome">
+    
     <div data-role="main" class="ui-content">
         <div class="headContent">
             <img src="images/OCC.JPG" alt="Operation Christmas Child"/>
@@ -75,22 +103,10 @@ $( document ).one( "pagecreate", ".homePage", function() {
         <div class="footContent">
         </div>
     </div>
-    <div data-role="footer" data-position="fixed" data-id="footer" data-theme="a">
-        <div data-role="navbar" data-theme="a">
-            <ul>
-                <li><a href="#home" data-id="home" data-icon="home" class="ui-btn-active ui-state-persist" data-transition="slide">Home</a></li>
-                <li><a href="#announcements" data-id="announcements" data-icon="comment" data-transition="slide">Announcements</a></li>
-                <li><a href="#service" data-id="service" data-icon="bullets" data-transition="slide">Service</a></li>
-            </ul>
-        </div>
-    </div>
+    
 </div>
 
-<div data-role="page" id="announcements" data-theme="a">
-	<div data-role="header" data-position="fixed" data-id="header" data-theme="a">
-        <h1>Announcements</h1>
-        <a href='#leftpanel1' data-icon='gear' data-iconpos='notext' data-theme='g'></a> 
-  	</div>
+<div data-role="page" id="announcements" data-theme="a" data-title="Announcements">
     <div data-role="main" class="ui-content">
     	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
     		<h4>Identify & Use Your Spiritual Gifts <span class="date">10/14</span></h4>
@@ -109,33 +125,12 @@ $( document ).one( "pagecreate", ".homePage", function() {
 		</div>
         
     </div>
-    <div data-role="footer" data-position="fixed" data-id="footer" data-theme="a">
-        <div data-role="navbar" data-theme="a">
-            <ul>
-                <li><a href="#home" data-id="home" data-icon="home" data-transition="slide" data-direction="reverse">Home</a></li>
-                <li><a href="#announcements" data-id="announcements" data-icon="comment" class="ui-btn-active ui-state-persist" data-transition="slide">Announcements</a></li>
-                <li><a href="#service" data-id="service" data-icon="bullets" data-transition="slide">Service</a></li>
-            </ul>
-        </div>
-    </div>
+    
 </div>
 
-<div data-role="page" id="service" data-theme="a">
-    <div data-role="header" data-position="fixed" data-id="header" data-theme="a">
-        <h1>Service</h1>
-        <a href='#leftpanel1' data-icon='gear' data-iconpos='notext' data-theme='g'></a> 
-    </div>
+<div data-role="page" id="service" data-theme="a" data-title="Service">
     <div data-role="main" class="ui-content">
         
-    </div>
-    <div data-role="footer" data-position="fixed" data-id="footer" data-theme="a">
-        <div data-role="navbar" data-theme="a">
-            <ul>
-                <li><a href="#home" data-id="home" data-icon="home" data-transition="slide" data-direction="reverse">Home</a></li>
-                <li><a href="#announcements" data-id="announcements" data-icon="comment" data-transition="slide" data-direction="reverse">Announcements</a></li>
-                <li><a href="#service" data-id="service" class="ui-btn-active ui-state-persist" data-icon="bullets" data-transition="slide">Service</a></li>
-            </ul>
-        </div>
     </div>
   
 </div>
