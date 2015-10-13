@@ -52,6 +52,12 @@ span.title {
     font-size: 85%;
     font-weight: normal;
 }
+html body a.ui-btn {
+	white-space: normal;
+}
+#message ol li ol {
+	list-style-type:upper-alpha;
+}
 </style>
 <script src="js/jquery-2.1.4.min.js"></script> 
 <script>
@@ -108,7 +114,7 @@ $( document ).on( "pagecontainerchange", function() {
     <div data-role="navbar" data-theme="a">
         <ul>
             <li><a href="#welcome" id="Welcome" data-icon="home" data-transition="fade">Welcome</a></li>
-            <li><a href="#announcements" id="Announcements" data-icon="comment" data-transition="fade">Announcements</a></li>
+            <li><a href="#events" id="Events" data-icon="comment" data-transition="fade">Events</a></li>
             <li><a href="#service" id="Service" data-icon="bullets" data-transition="fade">Service</a></li>
             <li><a href="#message" id="Message" data-icon="book" data-transition="fade">Message</a></li>
         </ul>
@@ -132,10 +138,10 @@ $( document ).on( "pagecontainerchange", function() {
     
 </div>
 
-<div data-role="page" id="announcements" data-theme="a" data-title="Announcements">
+<div data-role="page" id="events" data-theme="a" data-title="Events">
     <div data-role="main" class="ui-content">
     	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
-    		<h4>Identify & Use Your Spiritual Gifts <span class="date">10/14</span></h4>
+    		<h4><span class="date">10/14</span>Identify & Use Your Spiritual Gifts</h4>
 			<span class="contact">Contact: Huey Pearson 
             	(<a href="mailto:hpearson@olivebaptist.org">hpearson@olivebaptist.org</a>)
             </span>
@@ -143,7 +149,7 @@ $( document ).on( "pagecontainerchange", function() {
 		</div>
     
     	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
-    		<h4>Discovering Olive <span class="date">10/25</span></h4>
+    		<h4><span class="date">10/25</span>Discovering Olive</h4>
 			<span class="contact">Contact: Beth Harris 
             	(<a href="mailto:bharris@olivebaptist.org">bharris@olivebaptist.org</a>)
             </span>
@@ -161,7 +167,7 @@ $( document ).on( "pagecontainerchange", function() {
             <li><span class="title">Prelude</span><span class="song">Everlasting God</span><span class="performer">Orchestra</span></li>
             <li><span class="title">Call to Worship</span><span class="song">I Sing the Mighty Power of God</span><span class="song">A Mighty Fortress Is Our God</span></li>
             <li><span class="title">Welcome</span><span class="performer">Pastor</span></li>
-            <li><span class="title">Prasie &amp; Worship</span><span class="song">Hosanna (Praise Is Rising)</span><span class="song">Cornerstone</span></li>
+            <li><span class="title">Praise &amp; Worship</span><span class="song">Hosanna (Praise Is Rising)</span><span class="song">Cornerstone</span></li>
             <li><span class="title">Offeratory Prayer</span><span class="performer">Pastor</span></li>
             <li><span class="title">Offeratory Praise</span><span class="song">God of This City</span><span class="performer">Choir &amp; Orchestra</span><span class="performer">Jenny Thompson, solo</span></li>
             <li><span class="title">Message</span><span class="performer">Pastor</span></li>
@@ -173,14 +179,34 @@ $( document ).on( "pagecontainerchange", function() {
 
 <div data-role="page" id="message" data-theme="a" data-title="Message">
     <div data-role="main" class="ui-content">
-        <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
-    		<h4>Discovering Olive <span class="date">10/25</span></h4>
-			<span class="contact">Contact: Beth Harris 
-            	(<a href="mailto:bharris@olivebaptist.org">bharris@olivebaptist.org</a>)
-            </span>
-    		<p>Have you Recently Joined Olive? A prospective member? Then join us Sunday, October 25 at 5:30pm in the Passmore Hall. You'll enjoy a delicious meal and hear Pastor's vision for our church. Reserve your spot by contacting Beth Harris.</p>
-		</div>
+    	<h2>I Love My Community</h2>
+    	<div class="messageNotes" data-role="collapsibleset" data-theme="a" data-content-theme="a">
+        	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+            	<h3>The City of Nazareth (v.16)</h3>
+        		<p>Boyhood home of Jesus</p>
+        	</div>
+        	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+            	<h3>The City of Capernaum (v.31)</h3>
+        		<p>Base of Operations for Jesus</p>
+        	</div>
+        	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+           		<h3>The City of Pensacola</h3>
+        		<ol>
+                	<li>Our Message in the City</li>
+                	<li>Our Ministry in the City</li>
+                	<li>Our Methods in the City
+                    	<ol>
+                        	<li>Spiritual Battles in the __________</li>
+                        	<li>Spiritual Battles in the __________</li>
+                        	<li>Spiritual Battles in the __________</li>
+                        	<li>Spiritual Battles in the __________</li>
+                    	</ol>
+                	</li>
+            	</ol>
+        	</div>
+    	</div>
     </div>
+</div>
   
 </div>
 </body>
