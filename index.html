@@ -104,6 +104,38 @@ $( document ).on( "pagecontainerchange", function() {
         }
     });
 });
+var content = {
+    "welcomeContent": [
+        {
+            "container": ".welcomeHeader",
+            "content": "Welcome to Olive!"
+        },
+        {
+            "container": ".welcomeParagraph",
+            "content": "Hurricane Ivan changed Pensacola, changed Olive, and changed me. It was after that storm that our ministry in the community rose to a new level. The Ministry Village at Olive was born. Our engagement with Northwest Florida in compassion ministry has always been a part of our church. But that heartbeat simply became stronger after the storm."
+        }
+    ],
+    "eventContent": {
+        "container": "#events .ui-content",
+        "repeating": "true",
+        "content": [
+            {
+                "date": "10/14",
+                "title": "Identify &amp; Use Your Spiritual Gifts",
+                "contact": "Huey Pearson",
+                "email": "hpearson@olivebaptist.org",
+                "content": "In Christianity, spiritual gifts are endowments which may be given by the Holy Spirit. Join us to find yours! Class begins Wednesday, October 14 at 6pm in Room 5107."
+            },
+            {
+                "date": "10/25",
+                "title": "Discovering Olive",
+                "contact": "Beth Harris",
+                "email": "bharris@olivebaptist.org",
+                "content": "Have you Recently Joined Olive? A prospective member? Then join us Sunday, October 25 at 5:30pm in the Passmore Hall. You'll enjoy a delicious meal and hear Pastor's vision for our church. Reserve your spot by contacting Beth Harris."
+            }
+        ]
+    }
+};
 </script>
 </head>
 <body>
@@ -127,10 +159,8 @@ $( document ).on( "pagecontainerchange", function() {
             <img src="images/OCC.JPG" alt="Operation Christmas Child"/>
         </div>
         <div class="welcomeContent">
-            <span class="welcomeNote">
-            <h2>Welcome to Olive!</h2>
-            <p>Hurrican Ivan changed Pensacola, changed Olive, and changed me. It was after that storm that our ministry in the community rose to a new level. The Ministry Village at Olive was born. Our engagement with Northwest Florida in compassion ministry has always been a part of our church. But that heartbeat simply became stronger after the storm.</p>
-            </span>
+            <h2 class="welcomeHeader"></h2>
+            <p class="welcomeParagraph"></p>
         </div>
         <div class="footContent">
         </div>
@@ -140,22 +170,6 @@ $( document ).on( "pagecontainerchange", function() {
 
 <div data-role="page" id="events" data-theme="a" data-title="Events">
     <div data-role="main" class="ui-content">
-    	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
-    		<h4><span class="date">10/14</span>Identify & Use Your Spiritual Gifts</h4>
-			<span class="contact">Contact: Huey Pearson 
-            	(<a href="mailto:hpearson@olivebaptist.org">hpearson@olivebaptist.org</a>)
-            </span>
-    		<p>In Christianity, spiritual gifts are endowments which may be given by the Holy Spirit. Join us to find yours! Class begins Wednesday, October 14 at 6pm in Room 5107.</p>
-		</div>
-    
-    	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
-    		<h4><span class="date">10/25</span>Discovering Olive</h4>
-			<span class="contact">Contact: Beth Harris 
-            	(<a href="mailto:bharris@olivebaptist.org">bharris@olivebaptist.org</a>)
-            </span>
-    		<p>Have you Recently Joined Olive? A prospective member? Then join us Sunday, October 25 at 5:30pm in the Passmore Hall. You'll enjoy a delicious meal and hear Pastor's vision for our church. Reserve your spot by contacting Beth Harris.</p>
-		</div>
-        
     </div>
     
 </div>
@@ -209,5 +223,17 @@ $( document ).on( "pagecontainerchange", function() {
 </div>
   
 </div>
+
+<script>
+	//get welcome content
+	$.each(content.welcomeContent, function() {
+		$(this.container).html(this.content);
+	});
+	//get event content
+	$.each(content.eventContent.content, function() {
+		var announcement = '<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h4><span class="date">'+this.date+'</span><span class="announcementTitle">'+this.title+'</span></h4><span class="contact">Contact: '+this.contact+' (<a href="mailto:'+this.email+'">'+this.email+'</a>)</span><p class="announcementContent">'+this.content+'</p></div>';
+		$(content.eventContent.container).append(announcement);
+	});
+</script>
 </body>
 </html>
