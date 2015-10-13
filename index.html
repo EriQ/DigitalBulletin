@@ -67,10 +67,13 @@ $( document ).on( "pagecontainerchange", function() {
     // Remove active class from nav buttons
     $( "[data-role='navbar'] a.ui-btn-active" ).removeClass( "ui-btn-active" );
     // Add active class to current nav button
+	var direction = "reverse";
     $( "[data-role='navbar'] a" ).each(function() {
         if ( $( this ).text() === current ) {
             $( this ).addClass( "ui-btn-active" );
+			direction = "forward";
         }
+		$(this).attr("data-direction", direction);
     });
 });
 </script>
@@ -82,9 +85,9 @@ $( document ).on( "pagecontainerchange", function() {
 <div data-role="footer" data-id="footer" data-position="fixed" data-theme="a">
     <div data-role="navbar" data-theme="a">
         <ul>
-            <li><a href="#welcome" data-id="welcome" data-icon="home" data-transition="slide">Welcome</a></li>
-            <li><a href="#announcements" data-id="announcements" data-icon="comment" data-transition="slide">Announcements</a></li>
-            <li><a href="#service" data-id="service" class="ui-btn-active ui-state-persist" data-icon="bullets" data-transition="slide">Service</a></li>
+            <li><a href="#welcome" data-icon="home" data-transition="slide">Welcome</a></li>
+            <li><a href="#announcements" data-icon="comment" data-transition="slide">Announcements</a></li>
+            <li><a href="#service" data-icon="bullets" data-transition="slide">Service</a></li>
         </ul>
     </div>
 </div>
@@ -130,7 +133,13 @@ $( document ).on( "pagecontainerchange", function() {
 
 <div data-role="page" id="service" data-theme="a" data-title="Service">
     <div data-role="main" class="ui-content">
-        
+        <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+    		<h4>Discovering Olive <span class="date">10/25</span></h4>
+			<span class="contact">Contact: Beth Harris 
+            	(<a href="mailto:bharris@olivebaptist.org">bharris@olivebaptist.org</a>)
+            </span>
+    		<p>Have you Recently Joined Olive? A prospective member? Then join us Sunday, October 25 at 5:30pm in the Passmore Hall. You'll enjoy a delicious meal and hear Pastor's vision for our church. Reserve your spot by contacting Beth Harris.</p>
+		</div>
     </div>
   
 </div>
