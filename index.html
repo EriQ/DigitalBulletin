@@ -69,7 +69,7 @@ $(document).bind('mobileinit',function(){
 </script>
 <script src="jqm/jquery.mobile-1.4.5.min.js"></script>
 <script>
-$( document ).one( "pagecreate", ".homePage", function() {
+$( document ).on( "pagecreate", ".homePage", function() {
     
     $( document ).on( "swipeleft", ".ui-page", function( event ) {
         var next = $( this ).next().attr("id");
@@ -105,7 +105,7 @@ $( document ).on( "pagecontainerchange", function() {
     });
 });
 var content = {
-    "welcomeContent": [
+    "welcome": [
         {
             "container": ".welcomeHeader",
             "content": "Welcome to Olive!"
@@ -115,7 +115,7 @@ var content = {
             "content": "Hurricane Ivan changed Pensacola, changed Olive, and changed me. It was after that storm that our ministry in the community rose to a new level. The Ministry Village at Olive was born. Our engagement with Northwest Florida in compassion ministry has always been a part of our church. But that heartbeat simply became stronger after the storm."
         }
     ],
-    "eventContent": {
+    "events": {
         "container": "#events .ui-content",
         "repeating": "true",
         "content": [
@@ -134,7 +134,69 @@ var content = {
                 "content": "Have you Recently Joined Olive? A prospective member? Then join us Sunday, October 25 at 5:30pm in the Passmore Hall. You'll enjoy a delicious meal and hear Pastor's vision for our church. Reserve your spot by contacting Beth Harris."
             }
         ]
+    },
+	"service": {
+        "container": "#service ul.service",
+        "content": [
+            {
+                "divider": true,
+                "title": "Sunday Morning"
+            },
+            {
+                "title": "Prelude",
+                "song": "Everlasting God",
+                "performer": "Orchestra"
+            },
+            {
+                "title": "Call to Worship",
+                "song": "I Sing the Mighty Power of God</br>A Mighty Fortress Is Our God"
+            },
+            {
+                "title": "Welcome",
+                "performer": "Pastor"
+            },
+            {
+                "title": "Praise &amp; Worship",
+                "song": "Hosanna (Praise Is Rising)</br>Cornerstone"
+            },
+            {
+                "title": "Offeratory Prayer",
+                "performer": "Pastor"
+            },
+            {
+                "title": "Offeratory Praise",
+				"song": "God of This City",
+                "performer": "Choir &amp; Orchestra</br>Jenny Thompson, solo"
+            },
+            {
+                "title": "Message",
+                "performer": "Pastor"
+            },
+            {
+                "title": "Hymn of Invitation"
+            }
+        ]
+    },
+	"message": {
+        "container": "#message .ui-content",
+		"title": "I Love My Community",
+		"notesContainer": "#message .messageNotes",
+        "notes": [
+            {
+                "title": "The City of Nazareth (v.16)",
+				"content": "Boyhood home of Jesus"
+            },
+            {
+                "title": "The City of Capernaum (v.31)",
+                "content": "Base of Operations for Jesus"
+            },
+            {
+                "title": "The City of Pensacola",
+                "content": "<ol><li>Our Message in the City</li><li>Our Ministry in the City</li><li>Our Methods in the City<ol><li>Spiritual Battles in the __________</li><li>Spiritual Battles in the __________</li><li>Spiritual Battles in the __________</li><li>Spiritual Battles in the __________</li></ol></li></ol>"
+            }
+        ]
     }
+	
 };
 </script>
 </head>
@@ -177,15 +239,7 @@ var content = {
 <div data-role="page" id="service" data-theme="a" data-title="Service">
     <div data-role="main" class="ui-content">
         <ul data-role="listview" class="service" data-inset="true" data-divider-theme="b">
-        	<li data-role="list-divider">Sunday Morning</li>
-            <li><span class="title">Prelude</span><span class="song">Everlasting God</span><span class="performer">Orchestra</span></li>
-            <li><span class="title">Call to Worship</span><span class="song">I Sing the Mighty Power of God</span><span class="song">A Mighty Fortress Is Our God</span></li>
-            <li><span class="title">Welcome</span><span class="performer">Pastor</span></li>
-            <li><span class="title">Praise &amp; Worship</span><span class="song">Hosanna (Praise Is Rising)</span><span class="song">Cornerstone</span></li>
-            <li><span class="title">Offeratory Prayer</span><span class="performer">Pastor</span></li>
-            <li><span class="title">Offeratory Praise</span><span class="song">God of This City</span><span class="performer">Choir &amp; Orchestra</span><span class="performer">Jenny Thompson, solo</span></li>
-            <li><span class="title">Message</span><span class="performer">Pastor</span></li>
-            <li><span class="title">Hymn of Invitation</span></li>
+        	
         </ul>
     </div>
   
@@ -193,31 +247,7 @@ var content = {
 
 <div data-role="page" id="message" data-theme="a" data-title="Message">
     <div data-role="main" class="ui-content">
-    	<h2>I Love My Community</h2>
     	<div class="messageNotes" data-role="collapsibleset" data-theme="a" data-content-theme="a">
-        	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
-            	<h3>The City of Nazareth (v.16)</h3>
-        		<p>Boyhood home of Jesus</p>
-        	</div>
-        	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
-            	<h3>The City of Capernaum (v.31)</h3>
-        		<p>Base of Operations for Jesus</p>
-        	</div>
-        	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
-           		<h3>The City of Pensacola</h3>
-        		<ol>
-                	<li>Our Message in the City</li>
-                	<li>Our Ministry in the City</li>
-                	<li>Our Methods in the City
-                    	<ol>
-                        	<li>Spiritual Battles in the __________</li>
-                        	<li>Spiritual Battles in the __________</li>
-                        	<li>Spiritual Battles in the __________</li>
-                        	<li>Spiritual Battles in the __________</li>
-                    	</ol>
-                	</li>
-            	</ol>
-        	</div>
     	</div>
     </div>
 </div>
@@ -226,13 +256,36 @@ var content = {
 
 <script>
 	//get welcome content
-	$.each(content.welcomeContent, function() {
+	$.each(content.welcome, function() {
 		$(this.container).html(this.content);
 	});
 	//get event content
-	$.each(content.eventContent.content, function() {
+	$.each(content.events.content, function() {
 		var announcement = '<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h4><span class="date">'+this.date+'</span><span class="announcementTitle">'+this.title+'</span></h4><span class="contact">Contact: '+this.contact+' (<a href="mailto:'+this.email+'">'+this.email+'</a>)</span><p class="announcementContent">'+this.content+'</p></div>';
-		$(content.eventContent.container).append(announcement);
+		$(content.events.container).append(announcement);
+	});
+	//get service content
+	$.each(content.service.content, function() {
+		if(this.divider)
+			var serviceItem = '<li data-role="list-divider">'+this.title+'</li>';
+		else
+		{
+			var serviceItem = '<li>';
+			if(this.title)
+				serviceItem += '<span class="title">'+this.title+'</span>';
+			if(this.song)
+				serviceItem += '<span class="song">'+this.song+'</span>';
+			if(this.performer)
+				serviceItem += '<span class="performer">'+this.performer+'</span>';
+			serviceItem += '</li>'
+		}
+		$(content.service.container).append(serviceItem);
+	});
+	//get message content
+	$(content.message.container).prepend('<h2>'+content.message.title+'</h2>');
+	$.each(content.message.notes, function() {
+		var note = '<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h3>'+this.title+'</h3><p>'+this.content+'</p></div>';
+		$(content.message.notesContainer).append(note);
 	});
 </script>
 </body>
