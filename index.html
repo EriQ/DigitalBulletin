@@ -255,38 +255,45 @@ var content = {
 </div>
 
 <script>
-	//get welcome content
-	$.each(content.welcome, function() {
-		$(this.container).html(this.content);
+	$.ajax({
+	  dataType: "jsonp",
+	  url: "http://erichigdon.com/DigitalBulletin/php/data.php",
+	  success: function(content) {
+		//get welcome content
+		$.each(content.welcome, function() {
+			$(this.container).html(this.content);
+		});
+		//get event content
+		$.each(content.events.content, function() {
+			var announcement = '<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h4><span class="date">'+this.date+'</span><span class="announcementTitle">'+this.title+'</span></h4><span class="contact">Contact: '+this.contact+' (<a href="mailto:'+this.email+'">'+this.email+'</a>)</span><p class="announcementContent">'+this.content+'</p></div>';
+			$(content.events.container).append(announcement);
+		});
+		//get service content
+		$.each(content.service.content, function() {
+			if(this.divider)
+				var serviceItem = '<li data-role="list-divider">'+this.title+'</li>';
+			else
+			{
+				var serviceItem = '<li>';
+				if(this.title)
+					serviceItem += '<span class="title">'+this.title+'</span>';
+				if(this.song)
+					serviceItem += '<span class="song">'+this.song+'</span>';
+				if(this.performer)
+					serviceItem += '<span class="performer">'+this.performer+'</span>';
+				serviceItem += '</li>'
+			}
+			$(content.service.container).append(serviceItem);
+		});
+		//get message content
+		$(content.message.container).prepend('<h2>'+content.message.title+'</h2>');
+		$.each(content.message.notes, function() {
+			var note = '<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h3>'+this.title+'</h3><p>'+this.content+'</p></div>';
+			$(content.message.notesContainer).append(note);
+		});
+	  }
 	});
-	//get event content
-	$.each(content.events.content, function() {
-		var announcement = '<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h4><span class="date">'+this.date+'</span><span class="announcementTitle">'+this.title+'</span></h4><span class="contact">Contact: '+this.contact+' (<a href="mailto:'+this.email+'">'+this.email+'</a>)</span><p class="announcementContent">'+this.content+'</p></div>';
-		$(content.events.container).append(announcement);
-	});
-	//get service content
-	$.each(content.service.content, function() {
-		if(this.divider)
-			var serviceItem = '<li data-role="list-divider">'+this.title+'</li>';
-		else
-		{
-			var serviceItem = '<li>';
-			if(this.title)
-				serviceItem += '<span class="title">'+this.title+'</span>';
-			if(this.song)
-				serviceItem += '<span class="song">'+this.song+'</span>';
-			if(this.performer)
-				serviceItem += '<span class="performer">'+this.performer+'</span>';
-			serviceItem += '</li>'
-		}
-		$(content.service.container).append(serviceItem);
-	});
-	//get message content
-	$(content.message.container).prepend('<h2>'+content.message.title+'</h2>');
-	$.each(content.message.notes, function() {
-		var note = '<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h3>'+this.title+'</h3><p>'+this.content+'</p></div>';
-		$(content.message.notesContainer).append(note);
-	});
+	
 </script>
 </body>
 </html>
