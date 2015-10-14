@@ -1,6 +1,6 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-$data = '[{
+$data = '{
     "welcome": [
         {
             "container": ".welcomeHeader",
@@ -93,7 +93,7 @@ $data = '[{
         ]
     }
 	
-}]';
+}';
 $employees = json_decode($data, true);
 			
 echo json_encode($employees);
