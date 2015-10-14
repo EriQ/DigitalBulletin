@@ -38,51 +38,25 @@ $(document).ready(function() {
 	  dataType: "json",
 	  url: "http://erichigdon.com/DigitalBulletin/php/data.php",
 	  success: function(content) {
-		
-		//get welcome content
-		$.each(content.welcome.content, function() {
-			$("[templatefield='"+this.templateField+"']").html(this.content);
+		//Loop through pages
+		$.each(content, function() {
+			//loop through page content
+			$.each(this.content, function() {
+				var that = this;
+				if(this.repeating)
+				{
+					$.each(this.repeatdata, function() {
+						var template = $('[templatefield="'+that.templateField+'"] template').html();
+						var announcement = template.replace(/{date}/g, this.date).replace(/{title}/g, this.title).replace(/{contact}/g, this.contact).replace(/{email}/g, this.email).replace(/{content}/g, this.content);
+						$('[templatefield="'+that.templateField+'"]').append(announcement);
+					});
+				}
+				else
+				{
+					$("[templatefield='"+this.templateField+"']").html(this.content);
+				}
+			});
 		});
-		//get event content
-		$.each(content.events.content, function() {
-			var that = this;
-			if(this.repeating)
-			{
-				$.each(this.repeatdata, function() {
-					var template = $('[templatefield="'+that.templateField+'"] template').html();
-					var announcement = template.replace(/{date}/g, this.date).replace(/{title}/g, this.title).replace(/{contact}/g, this.contact).replace(/{email}/g, this.email).replace(/{content}/g, this.content);
-					$('[templatefield="'+that.templateField+'"]').append(announcement);
-				});
-			}
-			else
-			{
-				$("[templatefield='"+this.templateField+"']").html(this.content);
-			}
-			
-		});
-		/*//get service content
-		$.each(content.service.content, function() {
-			if(this.divider)
-				var serviceItem = '<li data-role="list-divider">'+this.title+'</li>';
-			else
-			{
-				var serviceItem = '<li>';
-				if(this.title)
-					serviceItem += '<span class="title">'+this.title+'</span>';
-				if(this.song)
-					serviceItem += '<span class="song">'+this.song+'</span>';
-				if(this.performer)
-					serviceItem += '<span class="performer">'+this.performer+'</span>';
-				serviceItem += '</li>'
-			}
-			$(content.service.container).append(serviceItem);
-		});
-		//get message content
-		$(content.message.container).prepend('<h2>'+content.message.title+'</h2>');
-		$.each(content.message.notes, function() {
-			var note = '<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h3>'+this.title+'</h3><p>'+this.content+'</p></div>';
-			$(content.message.notesContainer).append(note);
-		});*/
 	  }
 	});
 });
