@@ -38,16 +38,29 @@ $(document).ready(function() {
 	  dataType: "json",
 	  url: "http://erichigdon.com/DigitalBulletin/php/data.php",
 	  success: function(content) {
+		
 		//get welcome content
-		$.each(content.welcome, function() {
-			$(this.container).html(this.content);
+		$.each(content.welcome.content, function() {
+			$("[templatefield='"+this.templateField+"']").html(this.content);
 		});
 		//get event content
 		$.each(content.events.content, function() {
-			var announcement = '<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h4><span class="date">'+this.date+'</span><span class="announcementTitle">'+this.title+'</span></h4><span class="contact">Contact: '+this.contact+' (<a href="mailto:'+this.email+'">'+this.email+'</a>)</span><p class="announcementContent">'+this.content+'</p></div>';
-			$(content.events.container).append(announcement);
+			var that = this;
+			if(this.repeating)
+			{
+				$.each(this.repeatdata, function() {
+					var template = $('[templatefield="'+that.templateField+'"] template').html();
+					var announcement = template.replace(/{date}/g, this.date).replace(/{title}/g, this.title).replace(/{contact}/g, this.contact).replace(/{email}/g, this.email).replace(/{content}/g, this.content);
+					$('[templatefield="'+that.templateField+'"]').append(announcement);
+				});
+			}
+			else
+			{
+				$("[templatefield='"+this.templateField+"']").html(this.content);
+			}
+			
 		});
-		//get service content
+		/*//get service content
 		$.each(content.service.content, function() {
 			if(this.divider)
 				var serviceItem = '<li data-role="list-divider">'+this.title+'</li>';
@@ -69,7 +82,7 @@ $(document).ready(function() {
 		$.each(content.message.notes, function() {
 			var note = '<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h3>'+this.title+'</h3><p>'+this.content+'</p></div>';
 			$(content.message.notesContainer).append(note);
-		});
+		});*/
 	  }
 	});
 });
