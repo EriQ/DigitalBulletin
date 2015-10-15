@@ -38,7 +38,7 @@ span.date {
 ul.service {
     font-weight: bold;
 }
-span.title {
+.service span.title {
     display: block;
     margin-bottom: 10px;
 }
@@ -102,7 +102,7 @@ $(document).bind('mobileinit',function(){
     <div data-role="main" class="ui-content">
         <div templatefield="eventsRepeater">
             <template>
-            	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h4><span class="date">{date}</span><span class="announcementTitle">{title}</span></h4><span class="contact">Contact: {contact} (<a href="mailto:'+this.email+'">{email}</a>)</span><p class="announcementContent">{content}</p></div>
+            	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h4><span class="date">{date}</span><span class="title">{title}</span></h4><span class="contact">Contact: {contact} (<a href="mailto:'+this.email+'">{email}</a>)</span><p class="content">{content}</p></div>
             </template>
         </div>
     </div>
@@ -111,8 +111,10 @@ $(document).bind('mobileinit',function(){
 
 <div data-role="page" id="service" data-theme="a" data-title="Service">
     <div data-role="main" class="ui-content">
-        <ul data-role="listview" class="service" data-inset="true" data-divider-theme="b">
-        	
+        <ul templatefield="serviceRepeater" data-role="listview" class="service" data-inset="true" data-divider-theme="b">
+        	<template>
+            	<li data-role="{role}"><span class="title">{title}</span><span class="song">{song}</span><span class="performer">{performer}</span></li>
+            </template>
         </ul>
     </div>
   
@@ -120,7 +122,11 @@ $(document).bind('mobileinit',function(){
 
 <div data-role="page" id="message" data-theme="a" data-title="Message">
     <div data-role="main" class="ui-content">
-    	<div class="messageNotes" data-role="collapsibleset" data-theme="a" data-content-theme="a">
+    	<h2 templatefield="sermonTitle"></h2>
+    	<div templatefield="sermonRepeater" class="messageNotes" data-role="collapsibleset" data-theme="a" data-content-theme="a">
+        	<template>
+            	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h3>{title}</h3><p>{content}</p></div>
+            </template>
     	</div>
     </div>
 </div>

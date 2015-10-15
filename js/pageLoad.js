@@ -47,8 +47,15 @@ $(document).ready(function() {
 				{
 					$.each(this.repeatdata, function() {
 						var template = $('[templatefield="'+that.templateField+'"] template').html();
-						var announcement = template.replace(/{date}/g, this.date).replace(/{title}/g, this.title).replace(/{contact}/g, this.contact).replace(/{email}/g, this.email).replace(/{content}/g, this.content);
-						$('[templatefield="'+that.templateField+'"]').append(announcement);
+						$.each(this, function() {
+							var pattern = new RegExp("{"+this.id+"}", 'g');
+							template = template.replace(pattern, this.data);
+						});
+						var inputPattern = new RegExp("{input}", 'g');
+						template = template.replace(inputPattern, "<input type='text'></input>");
+						var emptyPattern = new RegExp("{(.*?)}", 'g');
+						template = template.replace(emptyPattern, "");
+						$('[templatefield="'+that.templateField+'"]').append(template);
 					});
 				}
 				else
@@ -57,6 +64,7 @@ $(document).ready(function() {
 				}
 			});
 		});
+		
 	  }
 	});
 });
