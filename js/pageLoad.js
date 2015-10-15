@@ -34,12 +34,14 @@ $( document ).on( "pagecontainerchange", function() {
     });
 });
 $(document).ready(function() {
+	var bulletinName;
 	$.ajax({
 	  dataType: "json",
 	  url: "http://erichigdon.com/DigitalBulletin/php/data.php",
 	  success: function(content) {
+		bulletinName = content.name;
 		//Loop through pages
-		$.each(content, function() {
+		$.each(content.pages, function() {
 			//loop through page content
 			$.each(this.content, function() {
 				var that = this;
@@ -51,12 +53,20 @@ $(document).ready(function() {
 							var pattern = new RegExp("{"+this.id+"}", 'g');
 							template = template.replace(pattern, this.data);
 						});
-						var inputPattern = new RegExp("{input}", 'g');
-						template = template.replace(inputPattern, "<input type='text'></input>");
+						if(that.saving)
+						{
+							var inputPattern = new RegExp("{input}", 'g');
+							template = template.replace(inputPattern, "<input type='text'/>");
+						}
 						var emptyPattern = new RegExp("{(.*?)}", 'g');
 						template = template.replace(emptyPattern, "");
 						$('[templatefield="'+that.templateField+'"]').append(template);
 					});
+				}
+				if(this.saving)
+				{
+					$('[templatefield="'+this.templateField+'"]').append("<input id='save' type='submit' value='Save'/>");
+					
 				}
 				else
 				{
@@ -64,7 +74,49 @@ $(document).ready(function() {
 				}
 			});
 		});
+		var table = bulletinName.replace(/ /g, "_");
+		var db = window.openDatabase("DigitalBulletin", "1.0", "Digital Bulletins", 200000);
+		//Load functions
+		function loadDB(tx) {
+			tx.executeSql('SELECT * FROM '+table, [], loadSuccess, errorloadingCB);
+		}
 		
+		function loadSuccess(tx, results) {
+			var len = results.rows.length;
+			for (var i=0; i<len; i++)
+			{
+				$("input[type='text']:eq("+results.rows.item(i).id+")").val(results.rows.item(i).data);
+			}
+		}
+		
+		function errorloadingCB(err) {
+			alert("Error processing SQL: "+err.code);
+		}
+		
+		db.transaction(loadDB, errorloadingCB);
+		
+		//Save functions
+		function populateDB(tx) {
+			tx.executeSql('DROP TABLE IF EXISTS '+table);
+			 tx.executeSql('CREATE TABLE IF NOT EXISTS '+table+' (id unique, data)');
+			 $("input[type='text']").each(function(index) {
+				tx.executeSql('INSERT INTO '+table+' (id, data) VALUES ('+index+', '+this.value+')');
+			 });
+		}
+		
+		function errorpopulatingCB(err) {
+			alert("Error processing SQL: "+err.code);
+		}
+		
+		function successpopulatingCB() {
+			alert("success!");
+		}
+		
+		$("#save").click(function() {
+			db.transaction(populateDB, errorpopulatingCB, successpopulatingCB);
+		});
 	  }
 	});
+	
+	
 });
