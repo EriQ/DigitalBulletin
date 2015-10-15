@@ -90,7 +90,7 @@ $(document).ready(function() {
 		}
 		
 		function errorloadingCB(err) {
-			alert("Error processing SQL: "+err.code);
+			console.log("Error processing SQL: "+err.message);
 		}
 		
 		db.transaction(loadDB, errorloadingCB);
@@ -100,16 +100,16 @@ $(document).ready(function() {
 			tx.executeSql('DROP TABLE IF EXISTS '+table);
 			 tx.executeSql('CREATE TABLE IF NOT EXISTS '+table+' (id unique, data)');
 			 $("input[type='text']").each(function(index) {
-				tx.executeSql('INSERT INTO '+table+' (id, data) VALUES ('+index+', '+this.value+')');
+				tx.executeSql("INSERT INTO "+table+" (id, data) VALUES ('"+index+"', '"+this.value+"')");
 			 });
 		}
 		
 		function errorpopulatingCB(err) {
-			alert("Error processing SQL: "+err.code);
+			console.log("Error processing SQL: "+err.message);
 		}
 		
 		function successpopulatingCB() {
-			alert("success!");
+			console.log("Data Saved");
 		}
 		
 		$("#save").click(function() {
