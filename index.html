@@ -103,7 +103,7 @@ $(document).bind('mobileinit',function(){
     <div data-role="main" class="ui-content">
         <div templatefield="eventsRepeater">
             <template>
-            	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h4><span class="date">{date}</span><span class="title">{title}</span></h4><span class="contact">Contact: {contact} (<a href="mailto:'+this.email+'">{email}</a>)</span><p class="content">{content}</p></div>
+            	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h4><span class="date">{date}</span><span class="title">{title}</span></h4><span class="contact">Contact: {contact} (<a href="mailto:{email}">{email}</a>)</span><p class="content">{content}</p></div>
             </template>
         </div>
     </div>
@@ -132,7 +132,48 @@ $(document).bind('mobileinit',function(){
     </div>
 </div>
   
-</div>
-
+<script>
+$(document).ready(function() {
+	var allPages = $("div[data-role='page']"),
+		pageCount = allPages.length;
+	var json = '{"name": "Test Bulletin", "pages":{';
+	allPages.each(function(index) {
+		var allFields = $("#"+$(this).attr("id")+" [templatefield]"),
+			fieldCount = allFields.length;
+		json += '"'+$(this).attr("data-title")+'":{"title": "'+$(this).attr("data-title")+'", "content":{';
+		allFields.each(function(contentNum) {
+			json += '"'+contentNum+'":';
+			if($(this).attr("templatefield").match(/Repeater/))
+			{
+				json += '{"type":"repeater", "fields":{';
+				var templatePattern = new RegExp("{(.*?)}", 'g'),
+					allItems = $(this).html().match(templatePattern),
+					itemCount = allItems.length;
+				$.each(allItems, function(templateFieldCount) {
+					json += '"'+templateFieldCount+'": "'+this+'"';
+					if (templateFieldCount != itemCount - 1) {
+						json += ',';
+					}
+				});
+				json += '}';
+			}
+			else
+			{
+				json += '"'+$(this).attr("templatefield")+'"';
+			}
+			if (contentNum != fieldCount - 1) {
+				json += ',';
+			}
+		});
+		json += '}}';
+		if (index != pageCount - 1) {
+			json += ',';
+		}
+		
+	});
+	json += '}}}}}';
+	console.log(json);
+});
+</script>
 </body>
 </html>

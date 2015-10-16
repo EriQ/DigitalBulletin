@@ -47,7 +47,7 @@ $(document).ready(function() {
 				var that = this;
 				if(this.repeating)
 				{
-					$.each(this.repeatdata, function() {
+					$.each(this.repeatdata, function(index) {
 						var template = $('[templatefield="'+that.templateField+'"] template').html();
 						$.each(this, function() {
 							var pattern = new RegExp("{"+this.id+"}", 'g');
