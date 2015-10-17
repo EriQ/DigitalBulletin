@@ -31,6 +31,8 @@ $(document).bind('mobileinit',function(){
 
 </body>
 <script>
-$( "body" ).load( "templates/default.html" );
+$("body").load('templates/default.html', function () {
+    $(this).trigger('create');
+});
 </script>
 </html>
