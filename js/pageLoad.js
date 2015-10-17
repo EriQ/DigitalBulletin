@@ -33,7 +33,7 @@ $( document ).on( "pagecontainerchange", function() {
         }
     });
 });
-$(document).bind('mobileinit',function(){
+function loadContent() {
 	var bulletinName;
 	$.ajax({
 	  dataType: "json",
@@ -74,6 +74,8 @@ $(document).bind('mobileinit',function(){
 				}
 			});
 		});
+	  	$("body").trigger('create');
+		$.mobile.changePage( "#home", {changeHash: true });
 		var table = bulletinName.replace(/ /g, "_");
 		var db = window.openDatabase("DigitalBulletin", "1.0", "Digital Bulletins", 200000);
 		//Load functions
@@ -119,4 +121,4 @@ $(document).bind('mobileinit',function(){
 	});
 	
 	
-});
+}
