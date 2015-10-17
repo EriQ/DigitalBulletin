@@ -16,50 +16,6 @@
 <link rel="stylesheet" href="jqm/jquery.mobile.icons-1.4.5.min.css" />
 <link rel="stylesheet" href="jqm/jquery.mobile.structure-1.4.5.min.css" />
 <link rel="stylesheet" href="jqm/jquery.mobile.theme-1.4.5.min.css" />
-<style type="text/css">
-
-img {
-	max-width: 100%;
-}
-span.contact {
-    display: block;
-    font-size: 85%;
-	font-weight: bold;
-}
-span.date {
-    float: right;
-}
-.ui-icon-book:after {
-	background-image: url("images/icons/book.svg");
-}
-/* Fallback */
-.ui-nosvg .ui-icon-book:after {
-	background-image: url("images/icons/book.png");
-}
-ul.service {
-    font-weight: bold;
-}
-.service span.title {
-    display: block;
-    margin-bottom: 10px;
-}
-.service span.song {
-    text-align: right;
-	display: block;
-}
-.service span.performer {
-    text-align: right;
-	display: block;
-    font-size: 85%;
-    font-weight: normal;
-}
-html body a.ui-btn {
-	white-space: normal;
-}
-#message ol li ol {
-	list-style-type:upper-alpha;
-}
-</style>
 <script src="js/jquery-2.1.4.min.js"></script> 
 <script>
 $(document).bind('mobileinit',function(){
@@ -69,69 +25,12 @@ $(document).bind('mobileinit',function(){
 });
 </script>
 <script src="jqm/jquery.mobile-1.4.5.min.js"></script>
-<script src="js/pageLoad.js"></script>
 </head>
 <body>
-<div data-role="header" data-position="fixed" data-id="header" data-theme="a">
-    <h1>Welcome</h1>
-</div>
-<div data-role="footer" data-id="footer" data-position="fixed" data-theme="a">
-    <div data-role="navbar" data-theme="a">
-        <ul>
-            <li><a href="#welcome" id="Welcome" data-icon="home" data-transition="fade">Welcome</a></li>
-            <li><a href="#events" id="Events" data-icon="comment" data-transition="fade">Events</a></li>
-            <li><a href="#service" id="Service" data-icon="bullets" data-transition="fade">Service</a></li>
-            <li><a href="#message" id="Message" data-icon="book" data-transition="fade">Message</a></li>
-        </ul>
-    </div>
-</div>
-<div data-role="page" id='welcome' class="homePage" data-theme='a' data-title="Welcome">
-    
-    <div data-role="main" class="ui-content">
-        <div templatefield="welcomeHeader" class="headContent">
-            
-        </div>
-        <div class="welcomeContent">
-            <h2 templatefield="welcomeHeadline"></h2>
-            <p templatefield="welcomeParagraph"></p>
-        </div>
-    </div>
-    
-</div>
 
-<div data-role="page" id="events" data-theme="a" data-title="Events">
-    <div data-role="main" class="ui-content">
-        <div templatefield="eventsRepeater">
-            <template>
-            	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h4><span class="date">{date}</span><span class="title">{title}</span></h4><span class="contact">Contact: {contact} (<a href="mailto:{email}">{email}</a>)</span><p class="content">{content}</p></div>
-            </template>
-        </div>
-    </div>
-    
-</div>
-
-<div data-role="page" id="service" data-theme="a" data-title="Service">
-    <div data-role="main" class="ui-content">
-        <ul templatefield="serviceRepeater" data-role="listview" class="service" data-inset="true" data-divider-theme="b">
-        	<template>
-            	<li data-role="{role}"><span class="title">{title}</span><span class="song">{song}</span><span class="performer">{performer}</span></li>
-            </template>
-        </ul>
-    </div>
-  
-</div>
-
-<div data-role="page" id="message" data-theme="a" data-title="Message">
-    <div data-role="main" class="ui-content">
-    	<h2 templatefield="sermonTitle"></h2>
-    	<div templatefield="sermonRepeater" class="messageNotes" data-role="collapsibleset" data-theme="a" data-content-theme="a">
-        	<template>
-            	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"><h3>{title}</h3><p>{content}</p></div>
-            </template>
-    	</div>
-    </div>
-</div>
-  
+  <script>
+  	$( "body" ).load( "templates/default.html body" );
+  </script>
 
 </body>
 </html>
