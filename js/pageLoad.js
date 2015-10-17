@@ -33,7 +33,7 @@ $( document ).on( "pagecontainerchange", function() {
         }
     });
 });
-$(document).ready(function() {
+$(document).bind('mobileinit',function(){
 	var bulletinName;
 	$.ajax({
 	  dataType: "json",
