@@ -33,12 +33,11 @@ $( document ).on( "pagecontainerchange", function() {
         }
     });
 });
-function loadContent() {
-	var bulletinName;
-	$.ajax({
-	  dataType: "json",
-	  url: "http://erichigdon.com/DigitalBulletin/php/data.php",
-	  success: function(content) {
+function loadContent(bulletinName) {
+	var table = bulletinName.replace(/ /g, "_"),
+		db = window.openDatabase("DigitalBulletin", "1.0", "Digital Bulletins", 200000),
+		storage = window.localStorage;
+	function loadData(content) {
 		bulletinName = content.name;
 		//Loop through pages
 		$.each(content.pages, function() {
@@ -76,8 +75,7 @@ function loadContent() {
 		});
 	  	$("body").trigger('create');
 		$.mobile.changePage( "#home", {changeHash: true });
-		var table = bulletinName.replace(/ /g, "_");
-		var db = window.openDatabase("DigitalBulletin", "1.0", "Digital Bulletins", 200000);
+	
 		//Load functions
 		function loadDB(tx) {
 			tx.executeSql('SELECT * FROM '+table, [], loadSuccess, errorloadingCB);
@@ -117,8 +115,23 @@ function loadContent() {
 		$("#save").click(function() {
 			db.transaction(populateDB, errorpopulatingCB, successpopulatingCB);
 		});
-	  }
-	});
+	}
+	console.log(storage.getItem(table));
+	/*if(storage.getItem(table))
+	{
+		loadData(storage.getItem(table));
+	}
+	else
+	{*/
+		$.ajax({
+		  dataType: "json",
+		  url: "http://erichigdon.com/DigitalBulletin/php/data.php",
+		  success: function(content) {
+			loadData(content);
+			//storage.setItem(table, JSON.stringify(content));
+		  }
+		});
+	//}
 	
 	
 }
