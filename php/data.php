@@ -24,6 +24,6 @@ if ($result->num_rows > 0) {
 }
 $conn->close();
 $employees = json_decode($content, true);
-			
+	//print_r($employees);		
 echo json_encode($employees);
 ?>

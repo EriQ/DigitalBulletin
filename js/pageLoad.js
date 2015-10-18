@@ -116,7 +116,7 @@ function loadContent(bulletinName) {
 			db.transaction(populateDB, errorpopulatingCB, successpopulatingCB);
 		});
 	}
-	console.log(storage.getItem(table));
+	//console.log(storage.getItem(table));
 	/*if(storage.getItem(table))
 	{
 		loadData(storage.getItem(table));
@@ -127,6 +127,7 @@ function loadContent(bulletinName) {
 		  dataType: "json",
 		  url: "http://erichigdon.com/DigitalBulletin/php/data.php",
 		  success: function(content) {
+			   console.log(content);
 			loadData(content);
 			//storage.setItem(table, JSON.stringify(content));
 		  }
