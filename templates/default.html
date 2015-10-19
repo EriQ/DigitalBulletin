@@ -41,7 +41,16 @@ html body a.ui-btn {
 #message ol li ol {
 	list-style-type:upper-alpha;
 }
+.loading {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    position: fixed;
+    z-index: 2000;
+}
 </style>
+
+<div class="loading"></div>
 <div data-role="header" data-position="fixed" data-id="header" data-theme="a">
     <h1>Welcome</h1>
 </div>
@@ -55,7 +64,7 @@ html body a.ui-btn {
         </ul>
     </div>
 </div>
-<div data-role="page" id='home' class="homePage" data-theme='a' data-title="Welcome">
+<div data-role="page" id="home" class="homePage" data-theme="a" data-title="Welcome">
     
     <div data-role="main" class="ui-content">
         <div templatefield="welcomeHeader" class="headContent">

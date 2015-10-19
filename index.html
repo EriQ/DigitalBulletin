@@ -17,6 +17,16 @@
 <link rel="stylesheet" href="jqm/jquery.mobile.structure-1.4.5.min.css" />
 <link rel="stylesheet" href="jqm/jquery.mobile.theme-1.4.5.min.css" />
 <script src="js/jquery-2.1.4.min.js"></script> 
+<script>
+$(document).bind('mobileinit',function(){
+	
+    $.mobile.changePage.defaults.changeHash = false;
+    $.mobile.hashListeningEnabled = false;
+    $.mobile.pushStateEnabled = false;
+	
+});
+</script>
+<script src="jqm/jquery.mobile-1.4.5.min.js"></script>
 <script src="js/pageLoad.js"></script>
 
 </head>
@@ -25,14 +35,10 @@
 </body>
 <script>
 $("body").load('templates/default.html', function () {
-	loadContent("Test Bulletin");
+	loadContent("Test Bulletin", function() {
+		
+	});
 });
-$(document).bind('mobileinit',function(){
-	
-    $.mobile.changePage.defaults.changeHash = false;
-    $.mobile.hashListeningEnabled = false;
-    $.mobile.pushStateEnabled = false;
-});
+
 </script>
-<script src="jqm/jquery.mobile-1.4.5.min.js"></script>
 </html>

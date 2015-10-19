@@ -75,6 +75,7 @@ function loadContent(bulletinName) {
 		});
 	  	$("body").trigger('create');
 		$.mobile.changePage( "#home", {changeHash: true });
+		$(".loading").remove();
 	
 		//Load functions
 		function loadDB(tx) {
@@ -115,24 +116,25 @@ function loadContent(bulletinName) {
 		$("#save").click(function() {
 			db.transaction(populateDB, errorpopulatingCB, successpopulatingCB);
 		});
+		
 	}
-	//console.log(storage.getItem(table));
-	/*if(storage.getItem(table))
+	
+	if(storage.getItem(table))
 	{
-		loadData(storage.getItem(table));
+		var loadedContent = JSON.parse(storage.getItem(table));
+		loadData(loadedContent);
 	}
 	else
-	{*/
+	{
 		$.ajax({
 		  dataType: "json",
 		  url: "http://erichigdon.com/DigitalBulletin/php/data.php",
 		  success: function(content) {
-			   console.log(content);
 			loadData(content);
-			//storage.setItem(table, JSON.stringify(content));
+			storage.setItem(table, JSON.stringify(content));
 		  }
 		});
-	//}
+	}
 	
 	
 }
