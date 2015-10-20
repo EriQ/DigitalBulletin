@@ -30,12 +30,10 @@ $( document ).on( "pagecontainerchange", function() {
             $( this ).addClass( "ui-btn-active" );
         }
     });
-	$(".loading").fadeOut(500, function() {
-		$(this).remove();
-	});
+	$(".loading").fadeOut(500);
 });
 function loadContent(bulletinName) {
-	var table = bulletinName.replace(/ /g, "_"),
+	var table = "bulletin"+bulletinName,
 		db = window.openDatabase("DigitalBulletin", "1.0", "Digital Bulletins", 200000),
 		storage = window.localStorage;
 	function loadData(content) {
@@ -129,7 +127,7 @@ function loadContent(bulletinName) {
 	{
 		$.ajax({
 		  dataType: "json",
-		  url: "http://erichigdon.com/DigitalBulletin/php/data.php",
+		  url: "http://erichigdon.com/DigitalBulletin/php/data.php?id="+bulletinName,
 		  success: function(content) {
 			loadData(content);
 			//storage.setItem(table, JSON.stringify(content));
@@ -139,3 +137,20 @@ function loadContent(bulletinName) {
 	
 	
 }
+$.ajax({
+  dataType: "json",
+  url: "http://erichigdon.com/DigitalBulletin/php/allBulletins.php?id=1",
+  success: function(data) {
+	var latestBulletin = data.bulletins[data.count-1];
+	$("body").load('templates/'+latestBulletin.template+'.html', function () {
+		loadContent(latestBulletin.ID);
+		$("#selectionPanel").append("<ul><li class='bulletinLink' id='1'>Test Bulletin</li><li class='bulletinLink' id='2'>Test Bulletin 2</li></ul>");
+		$(".bulletinLink").click(function() {
+			$(".loading").fadeIn(0);
+			loadContent($(this).attr("id"));
+		$("#selectionPanel").panel("close");
+	});
+	
+});
+  }
+});
