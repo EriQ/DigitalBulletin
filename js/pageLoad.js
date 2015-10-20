@@ -165,6 +165,18 @@ window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
 }
 function changeContent(bulletinNum, data) {
 	var bulletin = data.bulletins[bulletinNum-1];
+	var reader = new FileReader();
+	var fileSource = 'templates/'+bulletin.template+'/template.html'
+	
+	reader.onloadend = function(evt) {
+	
+		if(evt.target.result == null) {
+		   downloadFile(bulletin.template);
+		} else {
+			// Otherwise the file exists
+		}         
+	};
+	 
 	$("body").load('templates/'+bulletin.template+'/template.html', function (responseText, textStatus, e) {
 		if(responseText == "error")
 		{
