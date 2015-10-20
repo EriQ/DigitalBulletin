@@ -168,6 +168,7 @@ function changeContent(bulletinNum, data) {
 	$("body").load('templates/'+bulletin.template+'/template.html', function (responseText, textStatus, e) {
 		if(responseText == "error")
 		{
+			console.log(e.status);
 			downloadFile(bulletin.template);
 		}
 		else
