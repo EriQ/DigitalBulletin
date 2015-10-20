@@ -171,12 +171,14 @@ function changeContent(bulletinNum, data) {
 	reader.onloadend = function(evt) {
 	
 		if(evt.target.result == null) {
+		   console.log("File does not exist: downloading...");
 		   downloadFile(bulletin.template);
 		} else {
 			// Otherwise the file exists
 		}         
 	};
-	 
+	 // We are going to check if the file exists
+	reader.readAsDataURL(fileSource);  
 	$("body").load('templates/'+bulletin.template+'/template.html', function (responseText, textStatus, e) {
 		if(responseText == "error")
 		{
