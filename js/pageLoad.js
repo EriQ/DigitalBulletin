@@ -139,7 +139,11 @@ function changeContent(bulletinNum, data) {
 	var bulletin = data.bulletins[bulletinNum-1];
 	$("body").load('templates/'+bulletin.template+'.html', function () {
 		loadContent(bulletin.ID);
-		$("#selectionPanel").append("<ul><li class='bulletinLink' id='1'>Test Bulletin</li><li class='bulletinLink' id='2'>Test Bulletin 2</li></ul>");
+		$("#selectionPanel").append("<ul>");
+		$.each(data.bulletins, function() {
+			$("#selectionPanel").append("<li class='bulletinLink' id='"+this.ID+"'>"+this.name+"</li>");
+		});
+		$("#selectionPanel").append("</ul>");
 		$(".bulletinLink").click(function() {
 			if($(this).attr("id") != bulletinNum)
 			{
