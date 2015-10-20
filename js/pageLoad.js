@@ -132,7 +132,7 @@ function loadContent(bulletinName) {
 		  url: "http://erichigdon.com/DigitalBulletin/php/data.php",
 		  success: function(content) {
 			loadData(content);
-			storage.setItem(table, JSON.stringify(content));
+			//storage.setItem(table, JSON.stringify(content));
 		  }
 		});
 	}
