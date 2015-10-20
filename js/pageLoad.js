@@ -1,15 +1,13 @@
 $( document ).on( "pagecreate", ".homePage", function() {
-    
-    $( document ).on( "swipeleft", ".ui-page", function( event ) {
-        var next = $( this ).next().attr("id");
-        $.mobile.changePage( "#"+next, { transition: "slide", changeHash: true });
-    });
-    
-    $( document ).on( "swiperight", ".ui-page", function( event ) {
-        var next = $( this ).prev().attr("id");
-        $.mobile.changePage( "#"+next, { transition: "slide", reverse: true, changeHash: true });
-    });
-    
+	$( document ).on( "swipeleft", ".ui-page", function( event ) {
+		var next = $( this ).next().attr("id");
+		$.mobile.changePage( "#"+next, { transition: "slide", changeHash: true });
+	});
+	$( document ).on( "swiperight", ".ui-page", function( event ) {
+		var next = $( this ).prev().attr("id");
+		$.mobile.changePage( "#"+next, { transition: "slide", reverse: true, changeHash: true });
+	});
+	
 });
 $(function() {
     $( "[data-role='navbar']" ).navbar();
@@ -32,6 +30,9 @@ $( document ).on( "pagecontainerchange", function() {
             $( this ).addClass( "ui-btn-active" );
         }
     });
+	$(".loading").fadeOut(500, function() {
+		$(this).remove();
+	});
 });
 function loadContent(bulletinName) {
 	var table = bulletinName.replace(/ /g, "_"),
@@ -75,7 +76,7 @@ function loadContent(bulletinName) {
 		});
 	  	$("body").trigger('create');
 		$.mobile.changePage( "#home", {changeHash: true });
-		$(".loading").remove();
+		
 	
 		//Load functions
 		function loadDB(tx) {
