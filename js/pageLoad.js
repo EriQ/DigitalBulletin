@@ -134,23 +134,27 @@ function loadContent(bulletinName) {
 		  }
 		});
 	}
-	
-	
+}
+function changeContent(bulletinNum, data) {
+	var bulletin = data.bulletins[bulletinNum-1];
+	$("body").load('templates/'+bulletin.template+'.html', function () {
+		loadContent(bulletin.ID);
+		$("#selectionPanel").append("<ul><li class='bulletinLink' id='1'>Test Bulletin</li><li class='bulletinLink' id='2'>Test Bulletin 2</li></ul>");
+		$(".bulletinLink").click(function() {
+			if($(this).attr("id") != bulletinNum)
+			{
+				$(".loading").fadeIn(0);
+				changeContent($(this).attr("id"), data);
+			}
+			$("#selectionPanel").panel("close");
+		});
+		
+	});
 }
 $.ajax({
   dataType: "json",
   url: "http://erichigdon.com/DigitalBulletin/php/allBulletins.php?id=1",
   success: function(data) {
-	var latestBulletin = data.bulletins[data.count-1];
-	$("body").load('templates/'+latestBulletin.template+'.html', function () {
-		loadContent(latestBulletin.ID);
-		$("#selectionPanel").append("<ul><li class='bulletinLink' id='1'>Test Bulletin</li><li class='bulletinLink' id='2'>Test Bulletin 2</li></ul>");
-		$(".bulletinLink").click(function() {
-			$(".loading").fadeIn(0);
-			loadContent($(this).attr("id"));
-		$("#selectionPanel").panel("close");
-	});
-	
-});
+	changeContent(data.count, data);
   }
 });
