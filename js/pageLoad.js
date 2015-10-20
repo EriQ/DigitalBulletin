@@ -140,12 +140,13 @@ function changeContent(bulletinNum, data) {
 	var bulletin = data.bulletins[bulletinNum-1];
 	$("body").load('templates/'+bulletin.template+'.html', function (responseText, textStatus, e) {
 		
-		loadContent(bulletin.ID);
-		$("#selectionPanel").append("<ul>");
+		$("#selectionPanel").append('<ul data-role="listview" data-inset="true" data-theme="a">');
 		$.each(data.bulletins, function() {
-			$("#selectionPanel").append("<li class='bulletinLink' id='"+this.ID+"'>"+this.name+"</li>");
+			
+			$("#selectionPanel ul").append('<li><a href="#" class="bulletinLink" id="'+this.ID+'">'+this.name+'</a></li>');
 		});
-		$("#selectionPanel").append("</ul>");
+		$("#selectionPanel").trigger('create');
+		loadContent(bulletin.ID);
 		$(".bulletinLink").click(function() {
 			if($(this).attr("id") != bulletinNum)
 			{
