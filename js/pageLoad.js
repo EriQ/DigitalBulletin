@@ -163,45 +163,39 @@ window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
         }, fail);
     }, fail);
 }
+function checkIfFileExists(path){
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
+        fileSystem.root.getFile(path, { create: false }, fileExists, fileDoesNotExist);
+    }, getFSFail); //of requestFileSystem
+}
+function fileExists(fileEntry){
+    alert("File " + fileEntry.fullPath + " exists!");
+}
+function fileDoesNotExist(){
+    alert("file does not exist");
+}
+function getFSFail(evt) {
+    console.log(evt.target.error.code);
+}
 function changeContent(bulletinNum, data) {
 	var bulletin = data.bulletins[bulletinNum-1];
-	var reader = new FileReader();
-	var fileSource = 'templates/'+bulletin.template+'/template.html'
-	
-	reader.onloadend = function(evt) {
-	
-		if(evt.target.result == null) {
-		   console.log("File does not exist: downloading...");
-		   downloadFile(bulletin.template);
-		} else {
-			// Otherwise the file exists
-		}         
-	};
-	 // We are going to check if the file exists
-	reader.readAsDataURL(fileSource);  
+	checkIfFileExists('templates/'+bulletin.template+'/template.html');
 	$("body").load('templates/'+bulletin.template+'/template.html', function (responseText, textStatus, e) {
-		if(responseText == "error")
-		{
-			console.log(e.status);
-			downloadFile(bulletin.template);
-		}
-		else
-		{
-			loadContent(bulletin.ID);
-			$("#selectionPanel").append("<ul>");
-			$.each(data.bulletins, function() {
-				$("#selectionPanel").append("<li class='bulletinLink' id='"+this.ID+"'>"+this.name+"</li>");
-			});
-			$("#selectionPanel").append("</ul>");
-			$(".bulletinLink").click(function() {
-				if($(this).attr("id") != bulletinNum)
-				{
-					$(".loading").fadeIn(0);
-					changeContent($(this).attr("id"), data);
-				}
-				$("#selectionPanel").panel("close");
-			});
-		}
+		
+		loadContent(bulletin.ID);
+		$("#selectionPanel").append("<ul>");
+		$.each(data.bulletins, function() {
+			$("#selectionPanel").append("<li class='bulletinLink' id='"+this.ID+"'>"+this.name+"</li>");
+		});
+		$("#selectionPanel").append("</ul>");
+		$(".bulletinLink").click(function() {
+			if($(this).attr("id") != bulletinNum)
+			{
+				$(".loading").fadeIn(0);
+				changeContent($(this).attr("id"), data);
+			}
+			$("#selectionPanel").panel("close");
+		});
 		
 	});
 }
