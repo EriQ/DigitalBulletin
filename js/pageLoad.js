@@ -166,7 +166,7 @@ window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
 function changeContent(bulletinNum, data) {
 	var bulletin = data.bulletins[bulletinNum-1];
 	$("body").load('templates/'+bulletin.template+'/template.html', function (responseText, textStatus, e) {
-		if(e.status == "404")
+		if(responseText == "error")
 		{
 			downloadFile(bulletin.template);
 		}
