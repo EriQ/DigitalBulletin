@@ -135,52 +135,10 @@ function loadContent(bulletinName) {
 		});
 	}
 }
-function fail(error) { console.log(error.code); }
-function downloadFile(templateName){
 
-window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
-    function onFileSystemSuccess(fileSystem) {
-        fileSystem.root.getFile(
-        "dummy.html", {create: true, exclusive: false}, 
-        function gotFileEntry(fileEntry) {
-            var sPath = fileEntry.fullPath.replace("dummy.html","");
-            var fileTransfer = new FileTransfer();
-            fileEntry.remove();
-
-            fileTransfer.download(
-                "http://erichigdon.com/templates/"+templateName,
-                sPath + templateName,
-                function(theFile) {
-                    console.log("download complete: " + theFile.toURI());
-                    showLink(theFile.toURI());
-                },
-                function(error) {
-                    console.log("download error source " + error.source);
-                    console.log("download error target " + error.target);
-                    console.log("upload error code: " + error.code);
-                }
-            );
-        }, fail);
-    }, fail);
-}
-function checkIfFileExists(path){
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-        fileSystem.root.getFile(path, { create: false }, fileExists, fileDoesNotExist);
-    }, getFSFail); //of requestFileSystem
-}
-function fileExists(fileEntry){
-    alert("File " + fileEntry.fullPath + " exists!");
-}
-function fileDoesNotExist(){
-    alert("file does not exist");
-}
-function getFSFail(evt) {
-    console.log(evt.target.error.code);
-}
 function changeContent(bulletinNum, data) {
 	var bulletin = data.bulletins[bulletinNum-1];
-	checkIfFileExists('templates/'+bulletin.template+'/template.html');
-	$("body").load('templates/'+bulletin.template+'/template.html', function (responseText, textStatus, e) {
+	$("body").load('templates/'+bulletin.template+'.html', function (responseText, textStatus, e) {
 		
 		loadContent(bulletin.ID);
 		$("#selectionPanel").append("<ul>");
