@@ -135,23 +135,58 @@ function loadContent(bulletinName) {
 		});
 	}
 }
+function fail(error) { console.log(error.code); }
+function downloadFile(templateName){
+
+window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
+    function onFileSystemSuccess(fileSystem) {
+        fileSystem.root.getFile(
+        "dummy.html", {create: true, exclusive: false}, 
+        function gotFileEntry(fileEntry) {
+            var sPath = fileEntry.fullPath.replace("dummy.html","");
+            var fileTransfer = new FileTransfer();
+            fileEntry.remove();
+
+            fileTransfer.download(
+                "http://erichigdon.com/templates/"+templateName,
+                sPath + templateName,
+                function(theFile) {
+                    console.log("download complete: " + theFile.toURI());
+                    showLink(theFile.toURI());
+                },
+                function(error) {
+                    console.log("download error source " + error.source);
+                    console.log("download error target " + error.target);
+                    console.log("upload error code: " + error.code);
+                }
+            );
+        }, fail);
+    }, fail);
+}
 function changeContent(bulletinNum, data) {
 	var bulletin = data.bulletins[bulletinNum-1];
-	$("body").load('templates/'+bulletin.template+'.html', function () {
-		loadContent(bulletin.ID);
-		$("#selectionPanel").append("<ul>");
-		$.each(data.bulletins, function() {
-			$("#selectionPanel").append("<li class='bulletinLink' id='"+this.ID+"'>"+this.name+"</li>");
-		});
-		$("#selectionPanel").append("</ul>");
-		$(".bulletinLink").click(function() {
-			if($(this).attr("id") != bulletinNum)
-			{
-				$(".loading").fadeIn(0);
-				changeContent($(this).attr("id"), data);
-			}
-			$("#selectionPanel").panel("close");
-		});
+	$("body").load('templates/'+bulletin.template+'/template.html', function (responseText, textStatus, e) {
+		if(e.status == "404")
+		{
+			downloadFile(bulletin.template);
+		}
+		else
+		{
+			loadContent(bulletin.ID);
+			$("#selectionPanel").append("<ul>");
+			$.each(data.bulletins, function() {
+				$("#selectionPanel").append("<li class='bulletinLink' id='"+this.ID+"'>"+this.name+"</li>");
+			});
+			$("#selectionPanel").append("</ul>");
+			$(".bulletinLink").click(function() {
+				if($(this).attr("id") != bulletinNum)
+				{
+					$(".loading").fadeIn(0);
+					changeContent($(this).attr("id"), data);
+				}
+				$("#selectionPanel").panel("close");
+			});
+		}
 		
 	});
 }
