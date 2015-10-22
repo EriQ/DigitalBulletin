@@ -66,7 +66,7 @@ function saveBulletin() {
 		json += '"'+$(this).attr('id')+'":{ "title":"'+$(this).attr('id')+'", "content":{';
 		pageFields.each(function(fieldIndex) {
 			json += '"'+fieldIndex+'": {';
-			json += '"templatefield":"'+$(this).attr("id")+'",';
+			json += '"templateField":"'+$(this).attr("id")+'",';
 			if($(this).hasClass("repeaterField"))
 			{
 				json += '"repeating": true, "repeatdata":{';
@@ -114,7 +114,9 @@ function saveBulletin() {
 		url: 'http://erichigdon.com/DigitalBulletin/php/createBulletin.php',
 		data: {
 			name: $("#bulletinTitle").val(),
-			content:json
+			content:json,
+			template:$("#chooseTemplate").val(),
+			organization: 1
 		},
 		success: function(data) {
 			alert(data);
