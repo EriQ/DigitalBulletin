@@ -45,7 +45,7 @@ function loadContent(bulletinName) {
 				var that = this;
 				if(this.repeating)
 				{
-					$.each(this.repeatdata, function(index) {
+					/*$.each(this.repeatdata, function(index) {
 						var template = $('[templatefield="'+that.templateField+'"] template').html();
 						console.log(template);
 						$.each(this, function() {
@@ -60,7 +60,7 @@ function loadContent(bulletinName) {
 						var emptyPattern = new RegExp("{(.*?)}", 'g');
 						template = template.replace(emptyPattern, "");
 						$('[templatefield="'+that.templateField+'"]').append(template);
-					});
+					});*/
 				}
 				if(this.saving)
 				{
