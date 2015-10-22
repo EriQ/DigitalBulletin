@@ -1,167 +1,70 @@
-$( document ).on( "pagecreate", ".homePage", function() {
-	$( document ).on( "swipeleft", ".ui-page", function( event ) {
-		var next = $( this ).next().attr("id");
-		$.mobile.changePage( "#"+next, { transition: "slide", changeHash: true });
-	});
-	$( document ).on( "swiperight", ".ui-page", function( event ) {
-		var next = $( this ).prev().attr("id");
-		$.mobile.changePage( "#"+next, { transition: "slide", reverse: true, changeHash: true });
-	});
-	
-});
-$(function() {
-    $( "[data-role='navbar']" ).navbar();
-    $( "[data-role='header'], [data-role='footer']" ).toolbar();
-});
-// Update the contents of the toolbars
-$( document ).on( "pagecontainerchange", function() {
-    // Each of the four pages in this demo has a data-title attribute
-    // which value is equal to the text of the nav button
-    // For example, on first page: <div data-role="page" data-title="Info">
-    var current = $( ".ui-page-active" ).jqmData( "title" );
-    // Change the heading
-    $( "[data-role='header'] h1" ).text( current );
-    // Remove active class from nav buttons
-    $( "[data-role='navbar'] a.ui-btn-active" ).removeClass( "ui-btn-active" );
-    // Add active class to current nav button
-    $( "[data-role='navbar'] a" ).each(function() {
-        if ( $( this ).text() === current )
-		{
-            $( this ).addClass( "ui-btn-active" );
-        }
-    });
-	$(".loading").fadeOut(500);
-});
-function loadContent(bulletinName) {
-	var table = "bulletin"+bulletinName,
-		db = window.openDatabase("DigitalBulletin", "1.0", "Digital Bulletins", 200000),
-		storage = window.localStorage;
-	function loadData(content) {
-		bulletinName = content.name;
-		//Loop through pages
-		$.each(content.pages, function() {
-			//loop through page content
-			$.each(this.content, function() {
-				var that = this;
-				if(this.repeating)
-				{
-					$.each(this.repeatdata, function(index) {
-						var template = $('[templatefield="'+that.templateField+'"] template').html();
-						$.each(this, function() {
-							var pattern = new RegExp("{"+this.id+"}", 'g');
-							template = template.replace(pattern, this.data);
-						});
-						if(that.saving)
-						{
-							var inputPattern = new RegExp("{input}", 'g');
-							template = template.replace(inputPattern, "<input type='text'/>");
-						}
-						var emptyPattern = new RegExp("{(.*?)}", 'g');
-						template = template.replace(emptyPattern, "");
-						$('[templatefield="'+that.templateField+'"]').append(template);
-					});
-				}
-				if(this.saving)
-				{
-					$('[templatefield="'+this.templateField+'"]').append("<input id='save' type='submit' value='Save'/>");
-					
-				}
-				else
-				{
-					$("[templatefield='"+this.templateField+"']").html(this.content);
-				}
-			});
-		});
-	  	$("body").trigger('create');
-		$.mobile.changePage( "#home", {changeHash: true });
+function readTemplate() {
+	var allPages = $("#TemplateContent div[data-role='page']");
+		allPages.each(function() {
+		//Each page
+		var allFields = $("#TemplateContent #"+$(this).attr("id")+" [templatefield]"),
+			that = this;
+
+		$("#entryContent").append("<h1>"+$(this).attr("data-title")+"</h1><div class='page' id='"+$(this).attr("data-title")+"'></div>");
 		
-	
-		//Load functions
-		function loadDB(tx) {
-			tx.executeSql('SELECT * FROM '+table, [], loadSuccess, errorloadingCB);
-		}
-		
-		function loadSuccess(tx, results) {
-			var len = results.rows.length;
-			for (var i=0; i<len; i++)
+		allFields.each(function(sectionIndex) {
+			//Each templatefield
+			var theOther = this;
+			//if it is a repeater
+			if($(this).attr("templatefield").match(/Repeater/))
 			{
-				$("input[type='text']:eq("+results.rows.item(i).id+")").val(results.rows.item(i).data);
+				$("#"+$(that).attr("data-title")).append("<h2>"+$(this).attr("templatefield")+"</h2><div class='entryField' id='repeating"+$(this).attr("templatefield")+"'><div class='repeatFields'><a class='removeRow' onclick='removeRow(this);'>Remove Item</a></div><a class='addRow'>Add Item</a></div>");
+				var templatePattern = new RegExp("{(.*?)}", 'g'),
+					allItems = $(this).html().match(templatePattern),
+					foundItems = "";
+				$.each(allItems, function(templateFieldCount) {
+					if(!foundItems.match(new RegExp(this.toString(), 'i')))
+					{
+							$("<label>"+this.replace(/{/g, "").replace(/}/g, "")+"<input type='text' id='"+templateFieldCount+"'/></label>").insertBefore($("#repeating"+$(theOther).attr("templatefield")+" .repeatFields .removeRow"));
+						if(this.toString() == "{date}")
+						{
+							//$("#repeating"+$(theOther).attr("templatefield")+" #"+templateFieldCount+" ").datepicker();
+						}
+					}
+					foundItems += this+" ";
+					
+				});
+				
 			}
-		}
-		
-		function errorloadingCB(err) {
-			console.log("Error processing SQL: "+err.message);
-		}
-		
-		db.transaction(loadDB, errorloadingCB);
-		
-		//Save functions
-		function populateDB(tx) {
-			tx.executeSql('DROP TABLE IF EXISTS '+table);
-			 tx.executeSql('CREATE TABLE IF NOT EXISTS '+table+' (id unique, data)');
-			 $("input[type='text']").each(function(index) {
-				tx.executeSql("INSERT INTO "+table+" (id, data) VALUES ('"+index+"', '"+this.value+"')");
-			 });
-		}
-		
-		function errorpopulatingCB(err) {
-			console.log("Error processing SQL: "+err.message);
-		}
-		
-		function successpopulatingCB() {
-			console.log("Data Saved");
-		}
-		
-		$("#save").click(function() {
-			db.transaction(populateDB, errorpopulatingCB, successpopulatingCB);
+			else
+			{
+				$("#"+$(that).attr("data-title")).append("<div class='entryField'><label>"+$(this).attr("templatefield")+"<input type='text' id='"+$(this).attr("templatefield")+"' name='"+$(this).attr("templatefield")+"'/></label></div>");
+			}
+			
 		});
 		
-	}
+	});
+	$("body").append("<input id='createBulletin' type='button' value='Create Bulletin'/>");
+	$("#createBulletin").click(function() {
+		saveBulletin();
+	});
+	$(".addRow").click(function() {
+		$(this).siblings(".repeatFields:eq(0)").clone().insertBefore($(this));
+	});
+	$("#TemplateContent").empty();
+}
+function removeRow(element) {
+	$(element).parent().remove();
+}
+function loadTemplate(templateName) {
+	$("#TemplateContent").load('templates/'+templateName+'.html', function() {
+		readTemplate();
+	});
 	
-	if(storage.getItem(table))
-	{
-		var loadedContent = JSON.parse(storage.getItem(table));
-		loadData(loadedContent);
-	}
-	else
-	{
-		$.ajax({
-		  dataType: "json",
-		  url: "http://erichigdon.com/DigitalBulletin/php/data.php?id="+bulletinName,
-		  success: function(content) {
-			loadData(content);
-			storage.setItem(table, JSON.stringify(content));
-		  }
-		});
-	}
 }
 
-function changeContent(bulletinNum, data) {
-	var bulletin = data.bulletins[bulletinNum-1];
-	$("body").load('templates/'+bulletin.template+'.html', function (responseText, textStatus, e) {
-		
-		$("#selectionPanel").append('<ul data-role="listview" data-inset="true" data-theme="a">');
-		$.each(data.bulletins, function() {
-			
-			$("#selectionPanel ul").append('<li><a href="#" class="bulletinLink" id="'+this.ID+'">'+this.name+'</a></li>');
-		});
-		$("#selectionPanel").trigger('create');
-		loadContent(bulletin.ID);
-		$(".bulletinLink").click(function() {
-			if($(this).attr("id") != bulletinNum)
-			{
-				$(".loading").fadeIn(0);
-				changeContent($(this).attr("id"), data);
-			}
-			$("#selectionPanel").panel("close");
-		});
-		
+function saveBulletin() {
+	var json = '{"name": "'+$("#bulletinTitle").val()+'", "pages": {',
+		allPages = $(".page");
+	allPages.each(function(pageIndex) {
+		json += '"'+$(this).attr('id')+'":{';
+		json += '}';
 	});
+	json += '}}';
+	console.log(json);
 }
-$.ajax({
-  dataType: "json",
-  url: "http://erichigdon.com/DigitalBulletin/php/allBulletins.php?id=1",
-  success: function(data) {
-	changeContent(data.count, data);
-  }
-});
