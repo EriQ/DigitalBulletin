@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Create Bulletin</title>
+<meta charset="UTF-8">
+<script src="../js/jquery-2.1.4.min.js"></script>
+<script src="js/pageLoad.js"></script>
+<style>
+#TemplateContent, .repeatFields:first-of-type .removeRow {
+	display: none;
+}
+</style>
+</head>
+<body>
+	<div id="entryContent">
+        <h1>Create a Bulletin</h1>
+        <select id="chooseTemplate">
+            <option disabled="disabled" selected="selected">---Choose a Template---</option>
+            <option id="default" value="default">Default</option>
+        </select>
+        <label>Bulletin Title
+        	<input type="text" name="bulletinTitle" id="bulletinTitle" />
+        </label>
+    </div>
+	<div id="TemplateContent">
+	</div>
+    <div class="contentBox">
+    </div>
+    <script>
+		$("#chooseTemplate").change(function() {
+			loadTemplate($(this).val());
+		});
+	</script>
+</body>
+</html>
