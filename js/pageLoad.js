@@ -47,6 +47,7 @@ function loadContent(bulletinName) {
 				{
 					$.each(this.repeatdata, function(index) {
 						var template = $('[templatefield="'+that.templateField+'"] template').html();
+						console.log(template);
 						$.each(this, function() {
 							var pattern = new RegExp("{"+this.id+"}", 'g');
 							template = template.replace(pattern, this.data);
