@@ -46,23 +46,20 @@ function loadContent(bulletinName) {
 				if(this.repeating)
 				{
 					$.each(this.repeatdata, function(index) {
-						if(this.templateField)
+						var template = $('[templatefield="'+that.templateField+'"] template').html();
+						console.log(template);
+						$.each(this, function() {
+							var pattern = new RegExp("{"+this.id+"}", 'g');
+							template = template.replace(pattern, this.data);
+						});
+						if(that.saving)
 						{
-							var template = $('[templatefield="'+that.templateField+'"] template').html();
-							console.log(template);
-							$.each(this, function() {
-								var pattern = new RegExp("{"+this.id+"}", 'g');
-								template = template.replace(pattern, this.data);
-							});
-							if(that.saving)
-							{
-								var inputPattern = new RegExp("{input}", 'g');
-								template = template.replace(inputPattern, "<input type='text'/>");
-							}
-							var emptyPattern = new RegExp("{(.*?)}", 'g');
-							template = template.replace(emptyPattern, "");
-							$('[templatefield="'+that.templateField+'"]').append(template);
+							var inputPattern = new RegExp("{input}", 'g');
+							template = template.replace(inputPattern, "<input type='text'/>");
 						}
+						var emptyPattern = new RegExp("{(.*?)}", 'g');
+						template = template.replace(emptyPattern, "");
+						$('[templatefield="'+that.templateField+'"]').append(template);
 					});
 				}
 				if(this.saving)
