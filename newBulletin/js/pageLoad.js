@@ -52,7 +52,7 @@ function removeRow(element) {
 	$(element).parent().remove();
 }
 function loadTemplate(templateName) {
-	$("#TemplateContent").load('templates/'+templateName+'.html', function() {
+	$("#TemplateContent").load('../templates/'+templateName+'.html', function() {
 		readTemplate();
 	});
 	
