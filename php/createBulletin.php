@@ -1,5 +1,4 @@
 <?php
-header('Access-Control-Allow-Origin: *');
 
 $servername = "localhost";
 $username = "erichigd_bullet";
