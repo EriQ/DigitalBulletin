@@ -52,7 +52,7 @@ function removeRow(element) {
 	$(element).parent().remove();
 }
 function loadTemplate(templateName) {
-	$("#TemplateContent").load('../templates/'+templateName+'.html', function() {
+	$("#TemplateContent").load('http://erichigdon.com/DigitalBulletin/templates/'+templateName+'.html', function() {
 		readTemplate();
 	});
 	
