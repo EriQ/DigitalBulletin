@@ -1,32 +1,32 @@
 <!doctype html>
 <html lang="en">
 <head>
-<title>Create Bulletin</title>
-<meta charset="UTF-8">
-<script src="../js/jquery-2.1.4.min.js"></script>
-<script src="js/pageLoad.js"></script>
-<style>
-#TemplateContent, .repeatFields:first-of-type .removeRow {
-	display: none;
-}
-</style>
+    <title>Create Bulletin</title>
+    <meta charset="UTF-8">
+    <script src="../js/jquery-2.1.4.min.js"></script>
+    <script src="js/pageLoad.js"></script>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-	<div id="entryContent">
+	<div id="entryContent" class="page">
         <h1>Create a Bulletin</h1>
-        <select id="chooseTemplate">
-            <option disabled="disabled" selected="selected">---Choose a Template---</option>
-            <option id="default" value="default">Default</option>
-        </select>
-        <label>Bulletin Title
-        	<input type="text" name="bulletinTitle" id="bulletinTitle" />
+        <label class="formRow">
+            <select id="chooseTemplate">
+                <option disabled="disabled" selected="selected">---Choose a Template---</option>
+                <option id="default" value="default">Default</option>
+            </select>
         </label>
+        <div class="formRow">
+                <input type="text" name="bulletinTitle" id="bulletinTitle" />
+                <label for="bulletinTitle" >Bulletin Title</label>
+        </div>
     </div>
 	<div id="TemplateContent">
 	</div>
     <div class="contentBox">
     </div>
     <script>
+        loadTextListeners();
 		$("#chooseTemplate").change(function() {
 			loadTemplate($(this).val());
 		});

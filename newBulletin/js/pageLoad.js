@@ -5,7 +5,7 @@ function readTemplate() {
 		var allFields = $("#TemplateContent #"+$(this).attr("id")+" [templatefield]"),
 			that = this;
 
-		$("#entryContent").append("<h1>"+$(this).attr("data-title")+"</h1><div class='page' id='"+$(this).attr("data-title")+"'></div>");
+		$("#entryContent").append("<h2>"+$(this).attr("data-title")+"</h2><div class='page' id='"+$(this).attr("data-title")+"'></div>");
 		
 		allFields.each(function(sectionIndex) {
 			//Each templatefield
@@ -20,7 +20,13 @@ function readTemplate() {
 				$.each(allItems, function(templateFieldCount) {
 					if(!foundItems.match(new RegExp(this.toString(), 'i')))
 					{
-							$("<label>"+this.replace(/{/g, "").replace(/}/g, "")+"<input type='text' data-id='"+this.replace(/{/g, "").replace(/}/g, "")+"'/></label>").insertBefore($("#"+$(theOther).attr("templatefield")+" .repeatFields .removeRow"));
+                        if(this.toString() == "{content}")
+                        {
+                            $("<div class='formRow'><textarea id='"+$(theOther).attr("templatefield")+this.replace(/{/g, "").replace(/}/g, "")+"' data-id='"+this.replace(/{/g, "").replace(/}/g, "")+"'></textarea><label for='"+$(theOther).attr("templatefield")+this.replace(/{/g, "").replace(/}/g, "")+"'>"+this.replace(/{/g, "").replace(/}/g, "")+"</label></div>").insertBefore($("#"+$(theOther).attr("templatefield")+" .repeatFields .removeRow"));
+                        }
+                        else{
+				            $("<div class='formRow'><input type='text' id='"+$(theOther).attr("templatefield")+this.replace(/{/g, "").replace(/}/g, "")+"' data-id='"+this.replace(/{/g, "").replace(/}/g, "")+"'/><label for='"+$(theOther).attr("templatefield")+this.replace(/{/g, "").replace(/}/g, "")+"'>"+this.replace(/{/g, "").replace(/}/g, "")+"</label></div>").insertBefore($("#"+$(theOther).attr("templatefield")+" .repeatFields .removeRow"));
+                        }
 						if(this.toString() == "{date}")
 						{
 							//$("#"+$(theOther).attr("templatefield")+" #"+templateFieldCount+" ").datepicker();
@@ -33,27 +39,41 @@ function readTemplate() {
 			}
 			else
 			{
-				$("#"+$(that).attr("data-title")).append("<div class='entryField' id='"+$(this).attr("templatefield")+"'><label>"+$(this).attr("templatefield")+"<input type='text' /></label></div>");
+				$("#"+$(that).attr("data-title")).append("<div class='entryField'><div class='formRow'> <input id='"+$(that).attr("data-title")+$(this).attr("templatefield")+"' type='text' /><label for='"+$(that).attr("data-title")+$(this).attr("templatefield")+"'>"+$(this).attr("templatefield")+"</label></div></div>");
 			}
 			
 		});
 		
 	});
-	$("body").append("<input id='createBulletin' type='button' value='Create Bulletin'/>");
+	$("#entryContent").append("<input id='createBulletin' type='button' value='Create Bulletin'/>");
 	$("#createBulletin").click(function() {
 		saveBulletin();
 	});
 	$(".addRow").click(function() {
-		$(this).siblings(".repeatFields:eq(0)").clone().insertBefore($(this));
+		$(this).siblings(".repeatFields:eq(0)").clone().insertBefore($(this)).find("input:text").val("");
+        loadTextListeners();
 	});
 	$("#TemplateContent").empty();
 }
 function removeRow(element) {
 	$(element).parent().remove();
 }
+function loadTextListeners() {
+    $("input[type='text'], textarea").keyup(function() {
+        if($(this).val() != "")
+        {
+            $(this).addClass("filled");
+        }
+        else
+        {
+            $(this).removeClass("filled");
+        }
+    });
+}
 function loadTemplate(templateName) {
 	$("#TemplateContent").load('http://erichigdon.com/DigitalBulletin/templates/'+templateName+'.html', function() {
 		readTemplate();
+        loadTextListeners();
 	});
 	
 }
