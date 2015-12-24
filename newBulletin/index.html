@@ -8,16 +8,16 @@
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-	<div id="entryContent" class="page">
+	<div id="entryContent" class="pageStyle">
         <h1>Create a Bulletin</h1>
-        <label class="formRow">
+        <div class="formRow">
             <select id="chooseTemplate">
                 <option disabled="disabled" selected="selected">---Choose a Template---</option>
                 <option id="default" value="default">Default</option>
             </select>
-        </label>
+        </div>
         <div class="formRow">
-                <input type="text" name="bulletinTitle" id="bulletinTitle" />
+                <input type="text" name="bulletinTitle" id="bulletinTitle" required />
                 <label for="bulletinTitle" >Bulletin Title</label>
         </div>
     </div>

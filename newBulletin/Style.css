@@ -1,6 +1,9 @@
 #TemplateContent, .repeatFields:first-of-type .removeRow {
 	display: none;
 }
+select#chooseTemplate {
+    width: 100%;
+}
 a.addRow, a.removeRow {
     text-align: right;
     display: block;

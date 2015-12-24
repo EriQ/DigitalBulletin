@@ -13,7 +13,7 @@ function readTemplate() {
 			//if it is a repeater
 			if($(this).attr("templatefield").match(/Repeater/))
 			{
-				$("#"+$(that).attr("data-title")).append("<h2>"+$(this).attr("templatefield")+"</h2><div class='entryField repeaterField' id='"+$(this).attr("templatefield")+"'><div class='repeatFields'><a class='removeRow' onclick='removeRow(this);'>Remove Item</a></div><a class='addRow'>Add Item</a></div>");
+				$("#"+$(that).attr("data-title")).append("<h2>"+$(this).attr("templatefield")+"</h2><div class='entryField repeaterField' id='"+$(this).attr("templatefield")+"' data-id='"+$(this).attr("templatefield")+"'><div class='repeatFields'><a class='removeRow' onclick='removeRow(this);'>Remove Item</a></div><a class='addRow'>Add Item</a></div>");
 				var templatePattern = new RegExp("{(.*?)}", 'g'),
 					allItems = $(this).html().match(templatePattern),
 					foundItems = "";
@@ -22,10 +22,10 @@ function readTemplate() {
 					{
                         if(this.toString() == "{content}")
                         {
-                            $("<div class='formRow'><textarea id='"+$(theOther).attr("templatefield")+this.replace(/{/g, "").replace(/}/g, "")+"' data-id='"+this.replace(/{/g, "").replace(/}/g, "")+"'></textarea><label for='"+$(theOther).attr("templatefield")+this.replace(/{/g, "").replace(/}/g, "")+"'>"+this.replace(/{/g, "").replace(/}/g, "")+"</label></div>").insertBefore($("#"+$(theOther).attr("templatefield")+" .repeatFields .removeRow"));
+                            $("<div class='formRow entryField' data-id='"+this.replace(/{/g, "").replace(/}/g, "")+"'><textarea id='"+$(theOther).attr("templatefield")+this.replace(/{/g, "").replace(/}/g, "")+"'' data-id='"+this.replace(/{/g, "").replace(/}/g, "")+"' class='input' required ></textarea><label for='"+$(theOther).attr("templatefield")+this.replace(/{/g, "").replace(/}/g, "")+"'>"+this.replace(/{/g, "").replace(/}/g, "")+"</label></div>").insertBefore($("#"+$(theOther).attr("templatefield")+" .repeatFields .removeRow"));
                         }
                         else{
-				            $("<div class='formRow'><input type='text' id='"+$(theOther).attr("templatefield")+this.replace(/{/g, "").replace(/}/g, "")+"' data-id='"+this.replace(/{/g, "").replace(/}/g, "")+"'/><label for='"+$(theOther).attr("templatefield")+this.replace(/{/g, "").replace(/}/g, "")+"'>"+this.replace(/{/g, "").replace(/}/g, "")+"</label></div>").insertBefore($("#"+$(theOther).attr("templatefield")+" .repeatFields .removeRow"));
+				            $("<div class='formRow entryField' data-id='"+this.replace(/{/g, "").replace(/}/g, "")+"'><input type='text' id='"+$(theOther).attr("templatefield")+this.replace(/{/g, "").replace(/}/g, "")+"'' data-id='"+this.replace(/{/g, "").replace(/}/g, "")+"' required class='input' /><label for='"+$(theOther).attr("templatefield")+this.replace(/{/g, "").replace(/}/g, "")+"'>"+this.replace(/{/g, "").replace(/}/g, "")+"</label></div>").insertBefore($("#"+$(theOther).attr("templatefield")+" .repeatFields .removeRow"));
                         }
 						if(this.toString() == "{date}")
 						{
@@ -39,7 +39,7 @@ function readTemplate() {
 			}
 			else
 			{
-				$("#"+$(that).attr("data-title")).append("<div class='entryField'><div class='formRow'> <input id='"+$(that).attr("data-title")+$(this).attr("templatefield")+"' type='text' /><label for='"+$(that).attr("data-title")+$(this).attr("templatefield")+"'>"+$(this).attr("templatefield")+"</label></div></div>");
+				$("#"+$(that).attr("data-title")).append("<div class='formRow entryField' data-id='"+$(this).attr("templatefield")+"'> <input id='"+$(that).attr("data-title")+$(this).attr("templatefield")+"' class='input' type='text' required /><label for='"+$(that).attr("data-title")+$(this).attr("templatefield")+"'>"+$(this).attr("templatefield")+"</label></div>");
 			}
 			
 		});
@@ -86,14 +86,14 @@ function saveBulletin() {
 		json += '"'+$(this).attr('id')+'":{ "title":"'+$(this).attr('id')+'", "content":{';
 		pageFields.each(function(fieldIndex) {
 			json += '"'+fieldIndex+'": {';
-			json += '"templateField":"'+$(this).attr("id")+'",';
+			json += '"templateField":"'+$(this).attr("data-id")+'",';
 			if($(this).hasClass("repeaterField"))
 			{
 				json += '"repeating": true, "repeatdata":{';
 				var repeatingFields = $("#"+$(this).attr("id")+" .repeatFields"),
 					that = this;
 				repeatingFields.each(function(repeatIndex) {
-					var repeatInput = $("#"+$(that).attr("id")+" .repeatFields:eq("+repeatIndex+") input");
+					var repeatInput = $(that).find(".repeatFields:eq("+repeatIndex+")").find(".input");
 					json += '"'+repeatIndex+'":{';
 					repeatInput.each(function(inputIndex) {
 						json += '"'+inputIndex+'":{';
@@ -114,7 +114,7 @@ function saveBulletin() {
 			}
 			else
 			{
-				json += '"content":"'+$("#"+$(this).attr("id")+" input").val()+'"';
+				json += '"content":"'+$(this).find(".input").val()+'"';
 			}
 			json += '}';
 			if(fieldIndex != pageFields.length -1)
