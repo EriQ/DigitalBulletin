@@ -1,5 +1,69 @@
 <style type="text/css">
-
+body {
+    background: url(images/bg.jpg);
+}
+.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper {
+    background-color: transparent;
+    border-color: transparent;
+    color: #FFF;
+    text-shadow: none;
+	background: url(images/bg.jpg) no-repeat;
+}
+[data-role="header"].ui-header.ui-bar-a.ui-header-fixed.slidedown {
+    background: url(images/bg.jpg) no-repeat top;
+	border-bottom: 2px solid #FFF;
+}
+a.ui-btn-right.ui-btn.ui-icon-bars.ui-btn-icon-notext.ui-corner-all {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+.ui-btn-icon-left:after, .ui-btn-icon-right:after, .ui-btn-icon-top:after, .ui-btn-icon-bottom:after, .ui-btn-icon-notext:after {
+    background-color: transparent;
+    background-size: 100%;
+    border-radius: 0px;
+}
+html .ui-bar-a {
+    background-color: transparent;
+    border: none;
+    text-shadow: none;
+    color: #fff;
+    background: url(images/bg.jpg) no-repeat bottom;
+}
+[data-role="footer"] {
+	border-top: 2px solid #fff !important;
+}
+.ui-page-theme-a .ui-btn, html .ui-bar-a .ui-btn, html .ui-body-a .ui-btn, html body .ui-group-theme-a .ui-btn, html head+body .ui-btn.ui-btn-a, .ui-page-theme-a .ui-btn:visited, html .ui-bar-a .ui-btn:visited, html .ui-body-a .ui-btn:visited, html body .ui-group-theme-a .ui-btn:visited, html head+body .ui-btn.ui-btn-a:visited {
+    background-color: transparent;
+    border-color: #fff;
+    color: #fff;
+    text-shadow: none;
+}
+.ui-page-theme-a .ui-btn:hover, html .ui-bar-a .ui-btn:hover, html .ui-body-a .ui-btn:hover, html body .ui-group-theme-a .ui-btn:hover, html head+body .ui-btn.ui-btn-a:hover {
+    background-color: rgba(255, 255, 255, .2);
+    border-color: #FFF;
+    color: #fff;
+    text-shadow: none;
+}
+.ui-body-a, .ui-page-theme-a .ui-body-inherit, html .ui-bar-a .ui-body-inherit, html .ui-body-a .ui-body-inherit, html body .ui-group-theme-a .ui-body-inherit, html .ui-panel-page-container-a {
+    background-color: rgba(255, 255, 255, .6);
+    border-color: #fff;
+    color: #333;
+    text-shadow: none;
+}
+.ui-bar-b, .ui-page-theme-b .ui-bar-inherit, html .ui-bar-b .ui-bar-inherit, html .ui-body-b .ui-bar-inherit, html body .ui-group-theme-b .ui-bar-inherit {
+    background-color: rgba(255, 255, 255, .2);
+    border-color: #FFF;
+    color: #fff;
+    text-shadow: none;
+    font-weight: 700;
+}
+.ui-page-theme-a .ui-btn.ui-btn-active, html .ui-bar-a .ui-btn.ui-btn-active, html .ui-body-a .ui-btn.ui-btn-active, html body .ui-group-theme-a .ui-btn.ui-btn-active, html head+body .ui-btn.ui-btn-a.ui-btn-active, .ui-page-theme-a .ui-checkbox-on:after, html .ui-bar-a .ui-checkbox-on:after, html .ui-body-a .ui-checkbox-on:after, html body .ui-group-theme-a .ui-checkbox-on:after, .ui-btn.ui-checkbox-on.ui-btn-a:after, .ui-page-theme-a .ui-flipswitch-active, html .ui-bar-a .ui-flipswitch-active, html .ui-body-a .ui-flipswitch-active, html body .ui-group-theme-a .ui-flipswitch-active, html body .ui-flipswitch.ui-bar-a.ui-flipswitch-active, .ui-page-theme-a .ui-slider-track .ui-btn-active, html .ui-bar-a .ui-slider-track .ui-btn-active, html .ui-body-a .ui-slider-track .ui-btn-active, html body .ui-group-theme-a .ui-slider-track .ui-btn-active, html body div.ui-slider-track.ui-body-a .ui-btn-active {
+    background-color: rgba(255, 255, 255, .4);
+    border-color: #fff;
+    color: #fff;
+    text-shadow: none;
+}
 img {
 	max-width: 100%;
 }
@@ -44,7 +108,8 @@ html body a.ui-btn {
 .loading {
     width: 100%;
     height: 100%;
-    background: #fff;
+	background: url(images/bg.jpg) no-repeat;
+	background-size: cover;
     position: fixed;
     z-index: 2000;
 }
@@ -107,9 +172,9 @@ html body a.ui-btn {
 </div>
 <div data-role="header" data-position="fixed" data-id="header" data-theme="a">
 	<a href="#selectionPanel" class="ui-btn ui-btn-right ui-icon-bars ui-btn-icon-notext ui-corner-all">No text</a>
-    <h1>Welcome</h1>
+    <h1>Digital Bulletin</h1>
 </div>
-<div data-role="footer" data-id="footer" data-position="fixed" data-theme="a">
+<div data-role="footer" data-id="footer" data-position="fixed" data-tap-toggle="false" data-theme="a">
     <div data-role="navbar" data-theme="a">
         <ul>
             <li><a href="#home" id="Welcome" data-icon="home" data-transition="fade">Welcome</a></li>

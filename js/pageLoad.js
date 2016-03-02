@@ -20,7 +20,7 @@ $( document ).on( "pagecontainerchange", function() {
     // For example, on first page: <div data-role="page" data-title="Info">
     var current = $( ".ui-page-active" ).jqmData( "title" );
     // Change the heading
-    $( "[data-role='header'] h1" ).text( current );
+    //$( "[data-role='header'] h1" ).text( current );
     // Remove active class from nav buttons
     $( "[data-role='navbar'] a.ui-btn-active" ).removeClass( "ui-btn-active" );
     // Add active class to current nav button
