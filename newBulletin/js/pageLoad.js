@@ -70,8 +70,8 @@ function loadTextListeners() {
         }
     });
 }
-function loadTemplate(templateName) {
-	$("#TemplateContent").load('http://erichigdon.com/DigitalBulletin/app/templates/'+templateName+'.html', function() {
+function loadTemplate(templateURL) {
+	$("#TemplateContent").load(templateURL, function() {
 		readTemplate();
         loadTextListeners();
 	});

@@ -3,7 +3,7 @@
 <head>
     <title>Create Bulletin</title>
     <meta charset="UTF-8">
-    <script src="../js/jquery-2.1.4.min.js"></script>
+    <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/pageLoad.js"></script>
     <link rel="stylesheet" href="style.css"/>
 </head>
@@ -13,22 +13,38 @@
         <div class="formRow">
             <select id="chooseTemplate">
                 <option disabled="disabled" selected="selected">---Choose a Template---</option>
-                <option id="default" value="default">Default</option>
+                <option id="default" value="http://erichigdon.com/DigitalBulletin/app/templates/default.html">Default</option>
+                <option id="custom" value="custom">Custom</option>
             </select>
+        </div>
+        <div id="customTemplateRow" style="display: none;" class="formRow">
+            <input type="text" name="customTemplate" id="customTemplate"åå required />
+            <label for="customTemplate">Template URL</label>
         </div>
         <div class="formRow">
                 <input type="text" name="bulletinTitle" id="bulletinTitle" required />
                 <label for="bulletinTitle" >Bulletin Title</label>
         </div>
     </div>
-	<div id="TemplateContent">
-	</div>
+    <div id="TemplateContent">
+    </div>
     <div class="contentBox">
     </div>
     <script>
         loadTextListeners();
-		$("#chooseTemplate").change(function() {
-			loadTemplate($(this).val());
+		$("#chooseTemplate").on("change", function() {
+			if($(this).val() == "custom")
+			{
+				$("#customTemplateRow").show();
+				$("#customTemplate").on("change", function() {
+					loadTemplate($(this).val());
+				});
+			}
+			else
+			{
+				$("#customTemplateRow").hide();
+				loadTemplate($(this).val());
+			}
 		});
 	</script>
 </body>
