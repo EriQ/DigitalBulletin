@@ -71,9 +71,17 @@ function loadTextListeners() {
     });
 }
 function loadTemplate(templateURL) {
-	$("#TemplateContent").load(templateURL, function() {
-		readTemplate();
-        loadTextListeners();
+	$("#TemplateContent").load(templateURL, function(responseText, textStatus, req) {
+		if(req.status == "200")
+		{
+            $("#templateError").hide().html("");
+			readTemplate();
+			loadTextListeners();
+		}
+		else
+		{
+          $("#templateError").show().html("Invalid template ("+req.status+")");
+		}
 	});
 	
 }

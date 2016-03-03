@@ -138,7 +138,7 @@ function loadContent(bulletinName) {
 
 function changeContent(bulletinNum, data) {
 	var bulletin = data.bulletins[bulletinNum-1];
-	$("body").load('templates/'+bulletin.template+'.html', function (responseText, textStatus, e) {
+	$("body").load(bulletin.template, function (responseText, textStatus, e) {
 		
 		$("#selectionPanel").append('<ul data-role="listview" data-inset="true" data-theme="a">');
 		$.each(data.bulletins, function() {

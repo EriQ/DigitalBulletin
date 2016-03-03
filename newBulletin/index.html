@@ -20,6 +20,7 @@
         <div id="customTemplateRow" style="display: none;" class="formRow">
             <input type="text" name="customTemplate" id="customTemplate"åå required />
             <label for="customTemplate">Template URL</label>
+            <label id="templateError" style="display: none; color: #F00;"></label>
         </div>
         <div class="formRow">
                 <input type="text" name="bulletinTitle" id="bulletinTitle" required />
@@ -39,6 +40,7 @@
 				$("#customTemplate").on("change", function() {
 					loadTemplate($(this).val());
 				});
+				loadTextListeners();
 			}
 			else
 			{
