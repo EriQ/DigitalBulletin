@@ -71,7 +71,7 @@ function loadTextListeners() {
     });
 }
 function loadTemplate(templateName) {
-	$("#TemplateContent").load('http://erichigdon.com/DigitalBulletin/templates/'+templateName+'.html', function() {
+	$("#TemplateContent").load('http://erichigdon.com/DigitalBulletin/app/templates/'+templateName+'.html', function() {
 		readTemplate();
         loadTextListeners();
 	});
