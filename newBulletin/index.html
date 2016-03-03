@@ -35,7 +35,8 @@
 		$("#chooseTemplate").on("change", function() {
 			if($(this).val() == "custom")
 			{
-				$("#customTemplateRow").show().on("change", function() {
+				$("#customTemplateRow").show();
+				$("#customTemplate").on("change", function() {
 					loadTemplate($(this).val());
 				});
 			}
