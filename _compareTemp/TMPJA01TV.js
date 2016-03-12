@@ -45,11 +45,12 @@ function readTemplate() {
 		});
 		
 	});
-	$("#entryContent").append("<input id='previewBulletin' type='button' value='Preview' onclick='previewBulletin();'/>");
-	$("#entryContent").append("<input id='createBulletin' type='button' value='Create Bulletin' onclick='saveBulletin();'/>");
-	
+	$("#entryContent").append("<input id='createBulletin' type='button' value='Create Bulletin'/>");
+	$("#createBulletin").click(function() {
+		saveBulletin();
+	});
 	$(".addRow").click(function() {
-		$(this).siblings(".repeatFields:eq(0)").clone().insertBefore($(this)).find("input:text").val("").removeClass("filled");
+		$(this).siblings(".repeatFields:eq(0)").clone().insertBefore($(this)).find("input:text").val("");
         loadTextListeners();
 	});
 	$("#TemplateContent").empty();
@@ -97,20 +98,9 @@ function loadTemplate(templateURL) {
 	
 }
 
-function previewBulletin() {
-	if(typeof(Storage) !== "undefined") {
-		$(".previewBox").empty();
-		saveBulletin(true);
-		$(".previewBox").append("<iframe id='previewFrame' width='320' height='480' src='http://erichigdon.com/DigitalBulletin/app/index.html' frameborder='0'></iframe>");
-	} else {
-		alert("Your browser does not support preview.");
-	}
-}
-
-function saveBulletin(preview) {
-    var templateURL,
-		previewJson = '{"name": "'+$("#bulletinTitle").val()+'", "pages": ',
-		json = '{',
+function saveBulletin() {
+    var templateURL;
+	var json = '{',
 		allPages = $(".page");
 	allPages.each(function(pageIndex) {
 		var pageFields = $("#"+$(this).attr("id")+" .entryField");
@@ -164,27 +154,19 @@ function saveBulletin(preview) {
         templateURL = $("#customTemplate").val();
     else
         templateURL = $("#chooseTemplate").val();
-    if(preview == true)
-	{
-		previewJson += json + '}';
-		sessionStorage.previewData = previewJson;
-		sessionStorage.previewTemplate = templateURL;
-	}
-	else
-	{
-		$.ajax({
-			type: 'POST',
-			url: 'http://erichigdon.com/DigitalBulletin/php/createBulletin.php',
-			data: {
-				name: $("#bulletinTitle").val(),
-				content:json,
-				template:templateURL,
-				organization: 1
-			},
-			success: function(data) {
-				alert(data);
-			}
-		});
-	}
+    
+	$.ajax({
+		type: 'POST',
+		url: 'http://erichigdon.com/DigitalBulletin/php/createBulletin.php',
+		data: {
+			name: $("#bulletinTitle").val(),
+			content:json,
+			template:templateURL,
+			organization: 1
+		},
+		success: function(data) {
+			alert(data);
+		}
+	});
 	
 }
