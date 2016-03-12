@@ -72,25 +72,3 @@ input[type=text], textarea {
 input[type=text]:focus, textarea:focus {
   outline: none;
 }
-
-.hideField {
-    visibility: hidden;
-    position: fixed;
-    left: -100px;
-    width: 0px !important;
-    height: 0px !important;
-}
-
-label.templateNameLabel {
-    font-size: 30px;
-    color: #999;
-    display: block;
-}
-
-.chooseTemplateRow p {
-    margin: 0px 0px 0px 10px;
-}
-
-a.templateNameLink {
-    font-size: 10pt;
-}

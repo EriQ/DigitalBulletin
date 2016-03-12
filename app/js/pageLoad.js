@@ -118,7 +118,12 @@ function loadContent(bulletinName) {
 		
 	}
 	
-	if(storage.getItem(table))
+	if(previewData != null)
+	{
+		loadData(previewData);
+		sessionStorage.clear();
+	}
+	else if(storage.getItem(table))
 	{
 		var loadedContent = JSON.parse(storage.getItem(table));
 		loadData(loadedContent);
@@ -137,16 +142,28 @@ function loadContent(bulletinName) {
 }
 
 function changeContent(bulletinNum, data) {
-	var bulletin = data.bulletins[bulletinNum-1];
-	$("body").load(bulletin.template, function (responseText, textStatus, e) {
-		
-		$("#selectionPanel").append('<ul data-role="listview" data-inset="true" data-theme="a">');
-		$.each(data.bulletins, function() {
-			
-			$("#selectionPanel ul").append('<li><a href="#" class="bulletinLink" id="'+this.ID+'">'+this.name+'</a></li>');
-		});
-		$("#selectionPanel").trigger('create');
-		loadContent(bulletin.ID);
+	if(bulletinNum == "preview")
+	{
+		var bulletinTemplate = previewTemplate,
+			bulletinID = 1;
+	}
+	else
+	{
+		var bulletin = data.bulletins[bulletinNum-1],
+			bulletinTemplate = bulletin.template
+			bulletinID = bulletin.ID;
+	}
+	$("body").load(bulletinTemplate, function (responseText, textStatus, e) {
+		if(bulletinNum != "preview")
+		{
+			$("#selectionPanel").append('<ul data-role="listview" data-inset="true" data-theme="a">');
+			$.each(data.bulletins, function() {
+				
+				$("#selectionPanel ul").append('<li><a href="#" class="bulletinLink" id="'+this.ID+'">'+this.name+'</a></li>');
+			});
+			$("#selectionPanel").trigger('create');
+		}
+		loadContent(bulletinID);
 		$(".bulletinLink").click(function() {
 			if($(this).attr("id") != bulletinNum)
 			{
@@ -158,10 +175,32 @@ function changeContent(bulletinNum, data) {
 		
 	});
 }
-$.ajax({
-  dataType: "json",
-  url: "http://erichigdon.com/DigitalBulletin/php/allBulletins.php?id=1",
-  success: function(data) {
-	changeContent(data.count, data);
-  }
-});
+if(typeof(Storage) !== "undefined") {
+    // Code for localStorage/sessionStorage.
+	try
+	{
+		var previewData = JSON.parse(sessionStorage.previewData),
+			previewTemplate = sessionStorage.previewTemplate;
+	}
+	catch(ex)
+	{
+		var previewData = null;
+	}
+} else {
+    // Sorry! No Web Storage support..
+	alert("Your browser does not support preview");
+} 
+if(previewTemplate != null)
+{
+	changeContent("preview");
+}
+else
+{
+	$.ajax({
+	  dataType: "json",
+	  url: "http://erichigdon.com/DigitalBulletin/php/allBulletins.php?id=1",
+	  success: function(data) {
+		changeContent(data.count, data);
+	  }
+	});
+}

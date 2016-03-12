@@ -10,7 +10,7 @@
 <body>
 	<div id="entryContent" class="pageStyle">
         <h1>Create a Bulletin</h1>
-        <div class="formRow">
+        <div class="formRow chooseTemplateRow">
             <select id="chooseTemplate">
                 <option disabled="disabled" selected="selected">---Choose a Template---</option>
                 <option id="default" value="http://erichigdon.com/DigitalBulletin/app/templates/default.html">Default</option>
@@ -18,7 +18,7 @@
             </select>
         </div>
         <div id="customTemplateRow" style="display: none;" class="formRow">
-            <input type="text" name="customTemplate" id="customTemplate"åå required />
+            <input type="text" name="customTemplate" id="customTemplate" required />
             <label for="customTemplate">Template URL</label>
             <label id="templateError" style="display: none; color: #F00;"></label>
         </div>
@@ -38,7 +38,9 @@
 			{
 				$("#customTemplateRow").show();
 				$("#customTemplate").on("change", function() {
-					loadTemplate($(this).val());
+                    if($(this).val() != "")
+					   loadTemplate($(this).val());
+                        
 				});
 				loadTextListeners();
 			}

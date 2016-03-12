@@ -117,8 +117,8 @@ html body a.ui-btn {
     z-index: 2000;
 }
 .loading .spinner {
-	background-image: url(http://erichigdon.com/DigitalBulletin/app/images/icons/spinner.png);
-	background-image: url(http://erichigdon.com/DigitalBulletin/app/images/icons/spinner.svg);
+	background-image: url(http://erichigdon.com/DigitalBulletin/app/images/transparentLoader.gif);
+    background-size: contain;
     display: block;
     left: 40%;
     top: 0;
@@ -128,54 +128,17 @@ html body a.ui-btn {
     background-repeat: no-repeat;
     background-position: center;
     opacity: .8;
-    -webkit-animation-name: spin;
-    -webkit-animation-duration: 2000ms;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: linear;
-    -moz-animation-name: spin;
-    -moz-animation-duration: 2000ms;
-    -moz-animation-iteration-count: infinite;
-    -moz-animation-timing-function: linear;
-    -ms-animation-name: spin;
-    -ms-animation-duration: 2000ms;
-    -ms-animation-iteration-count: infinite;
-    -ms-animation-timing-function: linear;
-    
-    animation-name: spin;
-    animation-duration: 2000ms;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-}
-@-ms-keyframes spin {
-    from { -ms-transform: rotate(0deg); }
-    to { -ms-transform: rotate(360deg); }
-}
-@-moz-keyframes spin {
-    from { -moz-transform: rotate(0deg); }
-    to { -moz-transform: rotate(360deg); }
-}
-@-webkit-keyframes spin {
-    from { -webkit-transform: rotate(0deg); }
-    to { -webkit-transform: rotate(360deg); }
-}
-@keyframes spin {
-    from {
-        transform:rotate(0deg);
-    }
-    to {
-        transform:rotate(360deg);
-    }
 }
 </style>
 
 <div class="loading"><i class="spinner"></i></div>
 <div data-role="panel" id="selectionPanel" data-position="right">
-    <h2>Bulletin Archive</h2>
+    <h2>Archive</h2>
     
 </div>
 <div data-role="header" data-position="fixed" data-tap-toggle="false" data-id="header" data-theme="a">
 	<a href="#selectionPanel" class="ui-btn ui-btn-right ui-icon-bars ui-btn-icon-notext ui-corner-all">No text</a>
-    <h1>Digital Bulletin</h1>
+    <h1>Worship Guide</h1>
 </div>
 <div data-role="footer" data-id="footer" data-position="fixed" data-tap-toggle="false" data-theme="a">
     <div data-role="navbar" data-theme="a">
@@ -190,7 +153,7 @@ html body a.ui-btn {
 <div data-role="page" id="home" class="homePage" data-theme="a" data-title="Welcome">
     
     <div data-role="main" class="ui-content">
-        <div templatefield="welcomeHeader" class="headContent">
+        <div templatefield="thiswelcomeHeader" class="headContent">
             
         </div>
         <div class="welcomeContent">

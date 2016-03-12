@@ -70,13 +70,25 @@ function loadTextListeners() {
         }
     });
 }
+function confirmReload() {
+    var r = confirm("Are you sure you want to change templates?\nAll unsaved changes will be lost.");
+    if (r == true) {
+        location.reload();
+    }
+}
+function disableTemplateChange() {
+    $("#chooseTemplate, #customTemplateRow").addClass("hideField");
+    $(".chooseTemplateRow").append("<label class='templateNameLabel'>Template</label> <p>"+$("#chooseTemplate  option[value='"+$("#chooseTemplate").val()+"']").text()+" <a class='templateNameLink' href='#' onclick='confirmReload();'>Change Template</a></p>");
+}
 function loadTemplate(templateURL) {
+    
 	$("#TemplateContent").load(templateURL, function(responseText, textStatus, req) {
 		if(req.status == "200")
 		{
             $("#templateError").hide().html("");
 			readTemplate();
 			loadTextListeners();
+            disableTemplateChange();
 		}
 		else
 		{
@@ -87,6 +99,7 @@ function loadTemplate(templateURL) {
 }
 
 function saveBulletin() {
+    var templateURL;
 	var json = '{',
 		allPages = $(".page");
 	allPages.each(function(pageIndex) {
@@ -137,13 +150,18 @@ function saveBulletin() {
 		}
 	});
 	json += '}';
+    if($("#chooseTemplate").val() == "custom")
+        templateURL = $("#customTemplate").val();
+    else
+        templateURL = $("#chooseTemplate").val();
+    
 	$.ajax({
 		type: 'POST',
 		url: 'http://erichigdon.com/DigitalBulletin/php/createBulletin.php',
 		data: {
 			name: $("#bulletinTitle").val(),
 			content:json,
-			template:$("#chooseTemplate").val(),
+			template:templateURL,
 			organization: 1
 		},
 		success: function(data) {
